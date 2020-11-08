@@ -6,13 +6,33 @@ const selectionsEventListener = () => {
   const selectionDiv = document.getElementsByClassName("selection-div");
   for (let item of selectionDiv) {
     item.addEventListener("click", () => {
-      resetSelectionBorder();
+      resetSelectionDiv();
       resetMenuItemMargin();
+      resetMenuBars();
+      resetSelectionDescription();
       let selectedItem = item;
       changeborderLeft(selectedItem);
-      changeBackground(selectedItem);
       changeDescriptionColor(selectedItem);
     });
+  }
+};
+
+const resetSelectionDescription = () => {
+  const selectionDescription = document.getElementsByClassName(
+    "selection-description"
+  );
+  for (let item of selectionDescription) {
+    item.classList.remove("selection-description-selected");
+  }
+};
+
+const resetMenuBars = () => {
+  const menuIcon = document.getElementsByClassName("menu-icon");
+  for (let item of menuIcon) {
+    let menuCollection = item.children;
+    for (let menuItem of menuCollection) {
+      menuItem.classList.remove("menu-bar-selected");
+    }
   }
 };
 
@@ -23,7 +43,7 @@ const resetMenuItemMargin = () => {
   }
 };
 
-const resetSelectionBorder = () => {
+const resetSelectionDiv = () => {
   const selectionDiv = document.getElementsByClassName("selection-div");
   for (let item of selectionDiv) {
     item.classList.remove("selection-div-selected");

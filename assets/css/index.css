@@ -44,11 +44,11 @@
 .info-container{
 width: 280px;
 height: 738px;
+/* 
+overflow: scroll; */
 background: #F7F7F7;
 
 }
-
-
 
 .avatar-div {
     margin: 0 auto;
@@ -74,13 +74,26 @@ background: #F7F7F7;
 .content-container {
     width: 100%;
     height: 738px;
-    background: #414141;
+    overflow: scroll;
+    padding: 100px;
 }
 
 .selection-container {
     display: flex;
     flex-direction: column;
-    margin-top: 32px;
+    margin-top: 18px;
+    height: 500px;
+    overflow: scroll;
+
+    
+}
+
+.selection-title-div {
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 8px;
 }
 
 .selection-div {
@@ -90,12 +103,11 @@ background: #F7F7F7;
     margin: 3px 0;
 }
 
-.selection-div.selected-div-selected{
-    background: #EAEEF2;
-}
+
 
 .selection-div.selection-div-selected{
     border-left: 5px solid #ffb600;
+    background: #EAEEF2;
 }
 
 .selection-div:hover {
@@ -135,7 +147,7 @@ background: #F7F7F7;
 .menu-bar-one.menu-bar-selected {
     width: 10px;
     opacity: 1;
-    transition: 0.4s;
+    transition:  .4s;
 
 }
 
@@ -182,10 +194,19 @@ background: #F7F7F7;
 }
 
 .selection-progress {
-    width: 16px;
-    height:16px;
+    width: 18px;
+    height:18px;
     border-radius: 50%;
     border: 2px solid #ffb600;
-    margin: 20px 0 0 16px;
+    margin: 20px 0 0 4px;
+
+    
 }
 
+.selection-progress-img{
+    margin: 19px 0 0 4px;
+    width: 20px;
+    height:20px;
+    background: transparent url("../img/checkmark.png") 0% 0% no-repeat;
+    background-size: 20px;
+}
