@@ -223,3 +223,15 @@ section {
     background: transparent url("../img/checkmark.png") 0% 0% no-repeat;
     background-size: 20px;
 }
+
+#hub-tower {
+    background: lightgoldenrodyellow
+}
+
+#capture-image {
+    background: lightsteelblue;
+}
+
+#record-video {
+    background: lightsalmon;
+}
