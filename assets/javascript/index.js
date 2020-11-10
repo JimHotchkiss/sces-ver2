@@ -1,5 +1,6 @@
 window.addEventListener("load", (event) => {
   selectionsEventListener();
+  fadeIn();
 });
 
 const selectionsEventListener = () => {
@@ -74,5 +75,31 @@ const menuBar = (menuItem) => {
   const menuBars = menuItem.children;
   for (let item of menuBars) {
     item.classList.add("menu-bar-selected");
+  }
+};
+
+// Fade in
+const fadeIn = () => {
+  const faders = document.getElementsByClassName("fade-in");
+
+  const appearOptions = { threshold: 1 };
+  const appearOnScroll = new IntersectionObserver(function (
+    entries,
+    appearOnScroll
+  ) {
+    entries.forEach((entry) => {
+      console.log(entry.isIntersecting);
+      if (!entry.isIntersecting) {
+        entry.target.classList.remove("appear");
+        return;
+      } else {
+        entry.target.classList.add("appear");
+      }
+    });
+  },
+  appearOptions);
+
+  for (const fader of faders) {
+    appearOnScroll.observe(fader);
   }
 };
