@@ -84,7 +84,8 @@ section {
     display: flex;
     flex-direction: column;
     padding-top: 60px;
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
 
 }
 
@@ -129,6 +130,12 @@ section {
     background: #ffb600; 
 }
 
+/* .video-pdf-div {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+} */
+
 .video-div {
     display: flex;
     width: 345px;
@@ -145,7 +152,6 @@ section {
   }
 
 .video-text-div {
-   height: auto;
    min-height: 193px;
     padding: 16px;
     border-top: 3px solid #ffb600;
@@ -166,6 +172,14 @@ section {
     color: #0000008a;
     font-style: italic;
  }
+
+ /* .pdf-div {
+   height: 200px;
+     width: 50%;
+     margin-left: 32px;
+     margin-top: 32px;
+     background: lightseagreen;
+ } */
 
 .selection-container {
     display: flex;
