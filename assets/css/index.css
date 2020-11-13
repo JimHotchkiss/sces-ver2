@@ -83,13 +83,89 @@
 section {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 100%;
+    padding-top: 60px;
     height: 100vh;
 
 }
+
+.content-section-title h1 {
+    font-family: 'Lato', sans-serif;
+    font-size: 42px;
+    color: #2d363a;
+}
+
+.content-section-title {
+    width: 50%;
+    height: auto;
+    margin: 0 auto;
+
+    padding: 32px 16px;
+    text-align: center;
+    text-decoration: none;
+    
+}
+
+.content-section-title p {
+    font-family: 'Lato', sans-serif;
+    font-style: italic;
+    font-size: 13px;
+    color: #000;
+    opacity: 0.4;
+}
+
+.content-section-progress-bar-div {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 3px;
+    background: #f7f7f7;
+
+}
+
+.content-section-progress-bar {
+    width: 67%;
+    height: 3px;
+    border-radius: 1px;
+    background: #ffb600; 
+}
+
+.video-div {
+    display: flex;
+    width: 345px;
+    flex-direction: column;
+    margin-left: 10%;;
+     margin-top: 32px;
+     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+}
+
+.video-div:hover {
+    box-shadow: 0 7px 14px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  }
+
+.video-text-div {
+   height: auto;
+   min-height: 193px;
+    padding: 16px;
+    border-top: 3px solid #ffb600;
+    background: #F7F7F7;
+}
+
+.video-text-div h1{
+    font-family: 'Lato', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 8px;
+ }
+
+ .video-text-div p{
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #0000008a;
+    font-style: italic;
+ }
 
 .selection-container {
     display: flex;
@@ -241,7 +317,7 @@ section {
     opacity: 1;
 }
 
-#hub-tower {
+/* #hub-tower {
   
     background: lightgoldenrodyellow
 }
@@ -252,4 +328,4 @@ section {
 
 #record-video {
     background: lightsalmon;
-}
+} */
