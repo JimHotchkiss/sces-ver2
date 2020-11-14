@@ -401,6 +401,11 @@
     opacity: 0.4;
 }
 
+.introduction-description-text {
+    max-width: 300px;
+    padding: 16px 8px;
+}
+
 .sees-you {
     font-family: 'Lato', sans-serif;
     font-size: 42px;
