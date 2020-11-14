@@ -1,7 +1,23 @@
 window.addEventListener("load", (event) => {
   selectionsEventListener();
   fadeIn();
+  loadPageAtTop();
+  ButtonEventListener();
 });
+
+const ButtonEventListener = () => {
+  const buttonDiv = document.getElementsByClassName("button-div");
+  for (let item of buttonDiv) {
+    item.addEventListener("click", () => {
+      resetSelectionDiv();
+      resetMenuItemMargin();
+      resetMenuBars();
+      resetSelectionDescription();
+      resetshowToTopButton();
+      window.scrollTo(0, 0);
+    });
+  }
+};
 
 const selectionsEventListener = () => {
   const selectionDiv = document.getElementsByClassName("selection-div");
@@ -11,11 +27,22 @@ const selectionsEventListener = () => {
       resetMenuItemMargin();
       resetMenuBars();
       resetSelectionDescription();
+      showToTopButton();
       let selectedItem = item;
       changeborderLeft(selectedItem);
       changeDescriptionColor(selectedItem);
     });
   }
+};
+
+const resetshowToTopButton = () => {
+  const buttonDiv = document.getElementById("button");
+  buttonDiv.classList.remove("button-show");
+};
+
+const showToTopButton = () => {
+  const buttonDiv = document.getElementById("button");
+  buttonDiv.classList.add("button-show");
 };
 
 const resetSelectionDescription = () => {
@@ -88,13 +115,12 @@ const fadeIn = () => {
     appearOnScroll
   ) {
     entries.forEach((entry) => {
-      console.log(entry.isIntersecting);
       if (!entry.isIntersecting) {
         entry.target.classList.remove("appear");
         return;
       }
       entry.target.classList.add("appear");
-      console.log(entry.target.children);
+      lockScroll();
     });
   },
   appearOptions);
@@ -102,4 +128,13 @@ const fadeIn = () => {
   for (const fader of faders) {
     appearOnScroll.observe(fader);
   }
+};
+
+const loadPageAtTop = () => {
+  window.scrollTo(0, 0);
+};
+
+const lockScroll = () => {
+  // console.log(window.pageYOffset, window.pageXOffset);
+  document.body.classList.add("no-scroll");
 };

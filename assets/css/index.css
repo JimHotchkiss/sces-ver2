@@ -80,14 +80,14 @@
   
 }
 
-section {
+.fade-in {
     display: flex;
     flex-direction: column;
     padding-top: 60px;
     min-height: 100vh;
     height: auto;
-
 }
+
 
 .content-section-title h1 {
     font-family: 'Lato', sans-serif;
@@ -99,8 +99,7 @@ section {
     width: 50%;
     height: auto;
     margin: 0 auto;
-
-    padding: 32px 16px;
+    padding: 32px 16px 32px 16px;
     text-align: center;
     text-decoration: none;
     
@@ -295,9 +294,10 @@ section {
     opacity: 0.4;
 }
 
-.selection-description.selection-description-selected {
+.selection-description.selection-description-selected a{
     opacity: 1;
     transition: 0.4s;
+   
 }
 
 .selection-progress {
@@ -331,15 +331,95 @@ section {
     opacity: 1;
 }
 
-/* #hub-tower {
-  
-    background: lightgoldenrodyellow
+.no-scroll {
+    height: 100%; 
+    overflow: hidden; 
 }
 
-#capture-image {
-    background: lightsteelblue;
+.button-div{
+    display: none;
 }
 
-#record-video {
-    background: lightsalmon;
-} */
+.button-div.button-show{
+    display: block;
+    margin-top: 8px;
+    margin-left: auto;
+    margin-right: 30px;
+    border-radius: 50%;
+}
+
+.button-div.button-show:hover{
+    cursor: pointer;
+}
+
+.button-text {
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    font-style: italic;
+    color: #212121;
+    opacity: 0.5;
+    text-align: center;
+}
+
+.button-text:hover {
+    color: #ffb600;
+    transition: 0.4s;
+}
+
+.selection-description-selected{
+    color: #212121;
+}
+
+
+
+.button-img {
+    width: 20px;
+  height: 20px;
+   margin: 0 auto;
+  background: transparent url("../img/icon-arrow.svg") 0% 0% no-repeat
+    padding-box;
+  opacity: 1;
+  background-size: 20px;
+} 
+
+.introduction-content-section-title{
+   /* margin: 0 auto;
+   background: red; */
+}
+
+.introduction-content-section-title h1 {
+    font-family: 'Lato', sans-serif;
+    font-size: 42px;
+    color: #2d363a;
+}
+
+.introduction-content-section-title p {
+    font-family: 'Lato', sans-serif;
+    font-style: italic;
+    font-size: 13px;
+    color: #000;
+    opacity: 0.4;
+}
+
+.sees-you {
+    font-family: 'Lato', sans-serif;
+    font-size: 42px;
+    font-style: italic;
+    color: #ffb600; 
+}
+
+.tower-img {
+ width: 400px;
+  height: 700px;
+  background: transparent url("../img/tower-img.png") 0% 0% no-repeat
+    padding-box;
+  opacity: 1;
+  background-size: 500px;
+  margin-top: 36px;
+}
+
+#introduction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
