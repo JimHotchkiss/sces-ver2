@@ -23,15 +23,26 @@ const selectionsEventListener = () => {
   const selectionDiv = document.getElementsByClassName("selection-div");
   for (let item of selectionDiv) {
     item.addEventListener("click", () => {
+      console.log(item.children);
       resetSelectionDiv();
       resetMenuItemMargin();
       resetMenuBars();
       resetSelectionDescription();
       showToTopButton();
+      showSubtopicDiv();
       let selectedItem = item;
       changeborderLeft(selectedItem);
       changeDescriptionColor(selectedItem);
+      showSubtopicDiv(selectedItem);
     });
+  }
+};
+
+const showSubtopicDiv = (selectedItem) => {
+  if (selectedItem !== undefined) {
+    document
+      .querySelector(`#subtopic-${selectedItem.children[1].id}`)
+      .classList.toggle("subtopic-div-show");
   }
 };
 

@@ -423,6 +423,18 @@
   margin-top: 36px;
 }
 
+.subtopic-div {
+    width: 100%;
+    height: 0;
+    background: lightblue;
+    transition: all ease-in-out 0.3s;
+}
+
+.subtopic-div.subtopic-div-show {
+    height: 60px;
+    transition: all ease-in-out 0.3s;
+}
+
 #introduction {
     display: flex;
     align-items: center;
