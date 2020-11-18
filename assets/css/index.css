@@ -424,15 +424,34 @@
 }
 
 .subtopic-div {
-    width: 100%;
-    height: 0;
-    background: lightblue;
-    transition: all ease-in-out 0.3s;
+    max-height: 0;
+    overflow-y: hidden;
+    background: #EAEEF2;
+    border-left: 5px solid #ffb600;
+    transition: max-height 0.9s ease-out;
 }
 
 .subtopic-div.subtopic-div-show {
-    height: 60px;
-    transition: all ease-in-out 0.3s;
+    height: auto;
+    max-height: 1000px;
+    background: #EAEEF2;
+    border-left: 5px solid #ffb600;
+    transition: max-height 2s ease-out;
+    
+    
+}
+
+.subtopic-ul li {
+    max-width: auto;
+    list-style: none;
+    margin: 16px 0 16px 38px;
+}
+
+.subtopic-ul a {
+    text-decoration: none;
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    color: #212121;
 }
 
 #introduction {

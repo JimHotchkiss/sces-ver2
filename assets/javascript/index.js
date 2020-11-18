@@ -23,14 +23,13 @@ const selectionsEventListener = () => {
   const selectionDiv = document.getElementsByClassName("selection-div");
   for (let item of selectionDiv) {
     item.addEventListener("click", () => {
-      console.log(item.children);
+      let selectedItem = item;
       resetSelectionDiv();
       resetMenuItemMargin();
       resetMenuBars();
       resetSelectionDescription();
       showToTopButton();
       showSubtopicDiv();
-      let selectedItem = item;
       changeborderLeft(selectedItem);
       changeDescriptionColor(selectedItem);
       showSubtopicDiv(selectedItem);
