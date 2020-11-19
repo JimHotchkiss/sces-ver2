@@ -434,6 +434,7 @@
     margin-left: 54px;
 }
 
+
 .subtopic-ul.subtopic-ul-selected li {
     margin-left: 49px;
 }
@@ -445,6 +446,11 @@
     font-style: italic;
     opacity: 0.3;
     color: #212121;
+}
+
+.subtopic-ul a:hover {
+  opacity: 1;
+  transition: 0.3s;
 }
 
 #introduction {

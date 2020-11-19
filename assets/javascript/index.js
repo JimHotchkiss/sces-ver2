@@ -42,6 +42,7 @@ const checkSelection = (selectedItemId, selectedItem) => {
     resetMenuBars();
     resetSelectionDescription();
     resetSubtopicLiMargin(selectedItem);
+    window.scrollTo(0, 0);
     // showToTopButton();
     // showSubtopicDiv();
     // changeborderLeft(selectedItem);
