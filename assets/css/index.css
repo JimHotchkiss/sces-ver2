@@ -199,12 +199,14 @@
 }
 
 .selection-div {
+    border-left: 0px solid #ffb600;
     display: flex;
     flex-direction: column;
     width: 100%;
     max-height: 60px;
     overflow-y: hidden;
     margin: 3px 0;
+    transition: max-height 0.4s;
 }
 
 
@@ -217,25 +219,27 @@
 .selection-div.selection-div-selected{
     border-left: 5px solid #ffb600;
     background: #EAEEF2;
-    max-height: 1000px;
     height: auto;
-    transition: max-height 2s ease-out;
+    max-height: 1000px;
+    transition: max-height 2s;
 }
 
 .selection-div:hover {
-   cursor: pointer;
     background: #EAEEF2;
 }
 
 .menu-icon {
     width: 16px;
     height:16px;
-    margin: 22px 0 0 16px;
+    margin-top: 22px;
+    margin-left: 16px;
+    /* transition: 0.4s */
 
 }
 
 .menu-icon.menu-icon-selected {
     margin-left: 11px; 
+    /* transition: margin-left 0.2s; */
 }
 
 .menu-bar-one {
@@ -244,15 +248,7 @@
     margin-bottom: 2px;
     background: #414141;
     opacity: 0.4;
-
-}
-
-.menu-bar-one {
-    width: 13px;
-    height: 2px;
-    margin-bottom: 2px;
-    background: #414141;
-    opacity: 0.4;
+    transition: 0.4s;
 
 }
 
@@ -269,6 +265,7 @@
     margin-bottom : 2px;
     background: #414141;
     opacity: 0.4;
+    transition: 0.4s;
 }
 
 .menu-bar-two.menu-bar-selected {
@@ -282,6 +279,7 @@
     height: 2px;
     background: #414141;
     opacity: 0.4;
+    transition: 0.4s;
 }
 
 .menu-bar-three.menu-bar-selected {
@@ -303,6 +301,7 @@
     font-size: 13px;
     color: #000;
     opacity: 0.4;
+    transition: 0.4s;
 }
 
 .selection-description.selection-description-selected a{
@@ -377,9 +376,7 @@
     transition: 0.4s;
 }
 
-.selection-description-selected{
-    color: #212121;
-}
+
 
 
 
@@ -429,28 +426,16 @@
   margin-top: 36px;
 }
 
-/* .subtopic-div {
-    max-height: 0;
-    overflow-y: hidden;
-    background: #EAEEF2;
-    border-left: 5px solid #ffb600;
-    transition: max-height 0.4s ease-out;
-} */
-
-/* .subtopic-div.subtopic-div-show {
-    height: auto;
-    max-height: 1000px;
-    background: #EAEEF2;
-    border-left: 5px solid #ffb600;
-    transition: max-height 2s ease-out;
-    
-    
-} */
-
 .subtopic-ul li {
     max-width: auto;
     list-style: none;
-    margin: 16px 0 16px 38px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    margin-left: 54px;
+}
+
+.subtopic-ul.subtopic-ul-selected li {
+    margin-left: 49px;
 }
 
 .subtopic-ul a {

@@ -3,12 +3,14 @@ window.addEventListener("load", (event) => {
   fadeIn();
   loadPageAtTop();
   ButtonEventListener();
+  Store.removeSelections();
 });
 
 const ButtonEventListener = () => {
   const buttonDiv = document.getElementsByClassName("button-div");
   for (let item of buttonDiv) {
     item.addEventListener("click", () => {
+      Store.removeSelections();
       resetSelectionDiv();
       resetMenuItemMargin();
       resetMenuBars();
@@ -24,25 +26,50 @@ const selectionsEventListener = () => {
   for (let item of selectionDiv) {
     item.addEventListener("click", () => {
       let selectedItem = item;
-      resetSelectionDiv();
-      resetMenuItemMargin();
-      resetMenuBars();
-      resetSelectionDescription();
-      showToTopButton();
-      showSubtopicDiv();
-      changeborderLeft(selectedItem);
-      changeDescriptionColor(selectedItem);
-      showSubtopicDiv(selectedItem);
+      let selectedItemId = item.children.item(0).children.item(1).id;
+      checkSelection(selectedItemId, selectedItem);
+      // Store.removeSelections(selectedItemId);
     });
   }
 };
 
-const showSubtopicDiv = (selectedItem) => {
-  if (selectedItem !== undefined) {
-    document
-      .querySelector(`#subtopic-${selectedItem.children[0].children[1].id}`)
-      .classList.toggle("subtopic-div-show");
+const checkSelection = (selectedItemId, selectedItem) => {
+  if (Store.getSelections()[0] === selectedItemId) {
+    console.log("if");
+    Store.removeSelections();
+    resetSelectionDiv();
+    resetMenuItemMargin();
+    resetMenuBars();
+    resetSelectionDescription();
+    resetSubtopicLiMargin(selectedItem);
+    // showToTopButton();
+    // showSubtopicDiv();
+    // changeborderLeft(selectedItem);
+    // changeDescriptionColor(selectedItem);
+    // showSubtopicDiv(selectedItem);
+  } else {
+    console.log("else");
+    Store.removeSelections();
+    Store.addSelections(selectedItemId);
+    resetSelectionDiv();
+    resetMenuItemMargin();
+    resetMenuBars();
+    resetSelectionDescription();
+    showToTopButton();
+    changeborderLeft(selectedItem);
+    changeSubtopicLiMargin(selectedItem);
+    changeDescriptionColor(selectedItem);
   }
+};
+
+const resetSubtopicLiMargin = (selectedItem) => {
+  const liDivs = selectedItem.children.item(1).children.item(0);
+  liDivs.classList.remove("subtopic-ul-selected");
+};
+
+const changeSubtopicLiMargin = (selectedItem) => {
+  const liDivs = selectedItem.children.item(1).children.item(0);
+  liDivs.classList.add("subtopic-ul-selected");
 };
 
 const resetshowToTopButton = () => {
@@ -89,7 +116,7 @@ const resetSelectionDiv = () => {
 };
 
 const changeDescriptionColor = (selectedItem) => {
-  const selectionDescription = selectedItem.children.item(1);
+  const selectionDescription = selectedItem.children.item(0).children.item(1);
   selectionDescription.classList.add("selection-description-selected");
 };
 
@@ -101,7 +128,7 @@ const changeborderLeft = (selectedItem) => {
 };
 
 const menuItemMargin = (menuItem) => {
-  menuItem.classList.add("menu-icon-selected");
+  menuItem.children.item(0).classList.add("menu-icon-selected");
 };
 
 const changeBackground = (selectedItem) => {
@@ -109,7 +136,7 @@ const changeBackground = (selectedItem) => {
 };
 
 const menuBar = (menuItem) => {
-  const menuBars = menuItem.children;
+  const menuBars = menuItem.children.item(0).children;
   for (let item of menuBars) {
     item.classList.add("menu-bar-selected");
   }
@@ -145,6 +172,33 @@ const loadPageAtTop = () => {
 };
 
 const lockScroll = () => {
-  // console.log(window.pageYOffset, window.pageXOffset);
   document.body.classList.add("no-scroll");
 };
+
+// Store Class: Handles User's Selections
+class Store {
+  // Get selection
+  static getSelections() {
+    let selections;
+    if (localStorage.getItem("selections") === null) {
+      selections = [];
+    } else {
+      selections = JSON.parse(localStorage.getItem("selections"));
+    }
+    return selections;
+  }
+
+  // Add Selections
+  static addSelections(selection) {
+    const selections = Store.getSelections();
+    selections.push(selection);
+    localStorage.setItem("selections", JSON.stringify(selections));
+  }
+
+  // Remove selections
+  static removeSelections(index) {
+    const selections = Store.getSelections();
+    selections.length = 0;
+    localStorage.setItem("selections", JSON.stringify(selections));
+  }
+}
