@@ -40,7 +40,7 @@ const selectionsEventListener = () => {
 const showSubtopicDiv = (selectedItem) => {
   if (selectedItem !== undefined) {
     document
-      .querySelector(`#subtopic-${selectedItem.children[1].id}`)
+      .querySelector(`#subtopic-${selectedItem.children[0].children[1].id}`)
       .classList.toggle("subtopic-div-show");
   }
 };
