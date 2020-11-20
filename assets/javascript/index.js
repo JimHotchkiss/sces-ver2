@@ -7,11 +7,81 @@ window.addEventListener("load", (event) => {
   Store.removeSelections();
 });
 
+var codeBlock =
+  '<div class="content">' +
+  "<h1>This is a heading</h1>" +
+  "<p>This is a paragraph of text.</p>" +
+  '<p><strong>Note:</strong> If you don\'t escape "quotes" properly, it will not work.</p>' +
+  "</div>";
+
+// Quiz Material
+const questions = [
+  {
+    question: "1.) What is the answer to this question?",
+    answers: [
+      {
+        answer: "(a) Answer A",
+      },
+      {
+        answer: "(b) Answer B",
+      },
+      {
+        answer: "(c) Answer C",
+      },
+    ],
+    correct_answer: "a",
+  },
+  {
+    question: "2.) What is the answer to this question?",
+    answers: [
+      {
+        answer: "(a) Answer A",
+      },
+      {
+        answer: "(b) Answer B",
+      },
+      {
+        answer: "(c) Answer C",
+      },
+    ],
+    correct_answer: "a",
+  },
+  {
+    question: "3.) What is the answer to this question?",
+    answers: [
+      {
+        answer: "(a) Answer A",
+      },
+      {
+        answer: "(b) Answer B",
+      },
+      {
+        answer: "(c) Answer C",
+      },
+    ],
+    correct_answer: "a",
+  },
+  {
+    question: "4.) What is the answer to this question?",
+    answers: [
+      {
+        answer: "(a) Answer A",
+      },
+      {
+        answer: "(b) Answer B",
+      },
+      {
+        answer: "(c) Answer C",
+      },
+    ],
+    correct_answer: "a",
+  },
+];
+
 const subTopicUlEventListener = () => {
   const subTopicLi = document.getElementsByClassName("tower-subtopic-li");
   for (let item of subTopicLi) {
     item.addEventListener("click", () => {
-      console.log(item);
       // hide content image
       hideTopicContent();
     });
@@ -38,6 +108,30 @@ const showMaterialsDiv = () => {
   for (let item of materialsDiv) {
     item.classList.add("materials-div-show");
   }
+  showQuiz();
+};
+
+const showQuiz = () => {
+  console.log(codeBlock);
+  const materialsDiv = document.getElementById("materials-div");
+  const questionDiv = document.createElement("div");
+  questionDiv.setAttribute("class", "question-div");
+  const answerDiv = document.createElement("div");
+  answerDiv.setAttribute("class", "answer-div");
+  questions.map((topic) => {
+    const questionPtag = document.createElement("p");
+    questionPtag.setAttribute("class", "question-ptag");
+    questionPtag.innerText = topic.question;
+    questionDiv.appendChild(questionPtag);
+    topic.answers.map((answer) => {
+      const answerPtag = document.createElement("p");
+      answerPtag.setAttribute("class", "answer-ptag");
+      answerPtag.innerText = answer.answer;
+      answerDiv.appendChild(answerPtag);
+    });
+  });
+  materialsDiv.appendChild(questionDiv);
+  materialsDiv.appendChild(answerDiv);
 };
 
 const hideMaterialsDiv = () => {
@@ -57,7 +151,6 @@ const ButtonEventListener = () => {
       resetMenuBars();
       resetSelectionDescription();
       resetshowToTopButton();
-      console.log(window.scrollY);
       window.scrollTo(0, 0);
     });
   }
@@ -77,7 +170,6 @@ const selectionsEventListener = () => {
 };
 
 const checkSelection = (selectedItemId, selectedItem) => {
-  console.log(selectedItemId);
   if (Store.getSelections()[0] === selectedItemId) {
     console.log("if");
     Store.removeSelections();
@@ -154,7 +246,6 @@ const resetMenuItemMargin = () => {
 const resetSelectionDiv = () => {
   const selectionDiv = document.getElementsByClassName("selection-description");
   for (let item of selectionDiv) {
-    console.log(item.parentElement.parentElement);
     item.parentElement.parentElement.classList.remove("selection-div-selected");
   }
 };

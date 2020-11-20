@@ -57,9 +57,19 @@
 }
 
 .materials-div.materials-div-show{
-    width: 100%;
-    height: 603px;
-    background: blue;
+    width: 40%;
+    height: auto;
+    margin-left: 100px;
+}
+
+.question-div {
+    list-style-type: none;
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    color: #212121;
+    opacity: 0.4;
+    padding: 16px;
+    
 }
 
 .topics-div ul {
@@ -482,7 +492,7 @@
      opacity: 1;
      background-size: 200px;
      margin-top: 300px;
-     margin-right: 70px;
+     margin-right: 180px;
      border-bottom: 5px solid #ffb600;
    }
 
