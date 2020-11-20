@@ -3,8 +3,49 @@ window.addEventListener("load", (event) => {
   fadeIn();
   loadPageAtTop();
   ButtonEventListener();
+  subTopicUlEventListener();
   Store.removeSelections();
 });
+
+const subTopicUlEventListener = () => {
+  const subTopicLi = document.getElementsByClassName("tower-subtopic-li");
+  for (let item of subTopicLi) {
+    item.addEventListener("click", () => {
+      console.log(item);
+      // hide content image
+      hideTopicContent();
+    });
+  }
+};
+
+const hideTopicContent = () => {
+  const topicDiv = document.getElementsByClassName("topic-div");
+  for (let item of topicDiv) {
+    item.classList.add("topic-div-hide");
+  }
+  showMaterialsDiv();
+};
+
+const showTopicContent = () => {
+  const topicDiv = document.getElementsByClassName("topic-div");
+  for (let item of topicDiv) {
+    item.classList.remove("topic-div-hide");
+  }
+};
+
+const showMaterialsDiv = () => {
+  const materialsDiv = document.getElementsByClassName("materials-div");
+  for (let item of materialsDiv) {
+    item.classList.add("materials-div-show");
+  }
+};
+
+const hideMaterialsDiv = () => {
+  const materialsDiv = document.getElementsByClassName("materials-div");
+  for (let item of materialsDiv) {
+    item.classList.remove("materials-div-show");
+  }
+};
 
 const ButtonEventListener = () => {
   const buttonDiv = document.getElementsByClassName("button-div");
@@ -16,24 +57,27 @@ const ButtonEventListener = () => {
       resetMenuBars();
       resetSelectionDescription();
       resetshowToTopButton();
+      console.log(window.scrollY);
       window.scrollTo(0, 0);
     });
   }
 };
 
 const selectionsEventListener = () => {
-  const selectionDiv = document.getElementsByClassName("selection-div");
+  const selectionDiv = document.getElementsByClassName("selection-description");
   for (let item of selectionDiv) {
     item.addEventListener("click", () => {
-      let selectedItem = item;
-      let selectedItemId = item.children.item(0).children.item(1).id;
+      let selectedItem = item.parentElement.parentElement;
+      let selectedItemId = item.parentElement.parentElement.children
+        .item(0)
+        .children.item(1).id;
       checkSelection(selectedItemId, selectedItem);
-      // Store.removeSelections(selectedItemId);
     });
   }
 };
 
 const checkSelection = (selectedItemId, selectedItem) => {
+  console.log(selectedItemId);
   if (Store.getSelections()[0] === selectedItemId) {
     console.log("if");
     Store.removeSelections();
@@ -42,12 +86,10 @@ const checkSelection = (selectedItemId, selectedItem) => {
     resetMenuBars();
     resetSelectionDescription();
     resetSubtopicLiMargin(selectedItem);
+    resetshowToTopButton();
+    hideMaterialsDiv();
+    showTopicContent();
     window.scrollTo(0, 0);
-    // showToTopButton();
-    // showSubtopicDiv();
-    // changeborderLeft(selectedItem);
-    // changeDescriptionColor(selectedItem);
-    // showSubtopicDiv(selectedItem);
   } else {
     console.log("else");
     Store.removeSelections();
@@ -110,9 +152,10 @@ const resetMenuItemMargin = () => {
 };
 
 const resetSelectionDiv = () => {
-  const selectionDiv = document.getElementsByClassName("selection-div");
+  const selectionDiv = document.getElementsByClassName("selection-description");
   for (let item of selectionDiv) {
-    item.classList.remove("selection-div-selected");
+    console.log(item.parentElement.parentElement);
+    item.parentElement.parentElement.classList.remove("selection-div-selected");
   }
 };
 
