@@ -7,74 +7,31 @@ window.addEventListener("load", (event) => {
   Store.removeSelections();
 });
 
-var codeBlock =
-  '<div class="content">' +
-  "<h1>This is a heading</h1>" +
-  "<p>This is a paragraph of text.</p>" +
-  '<p><strong>Note:</strong> If you don\'t escape "quotes" properly, it will not work.</p>' +
-  "</div>";
-
-// Quiz Material
-const questions = [
+// Content Material
+const tower_material = [
   {
-    question: "1.) What is the answer to this question?",
-    answers: [
-      {
-        answer: "(a) Answer A",
-      },
-      {
-        answer: "(b) Answer B",
-      },
-      {
-        answer: "(c) Answer C",
-      },
-    ],
-    correct_answer: "a",
+    topic1:
+      "Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
   },
   {
-    question: "2.) What is the answer to this question?",
-    answers: [
-      {
-        answer: "(a) Answer A",
-      },
-      {
-        answer: "(b) Answer B",
-      },
-      {
-        answer: "(c) Answer C",
-      },
-    ],
-    correct_answer: "a",
+    topic2:
+      "Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
   },
   {
-    question: "3.) What is the answer to this question?",
-    answers: [
-      {
-        answer: "(a) Answer A",
-      },
-      {
-        answer: "(b) Answer B",
-      },
-      {
-        answer: "(c) Answer C",
-      },
-    ],
-    correct_answer: "a",
+    topic3:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam quam, ipsa excepturi qui reiciendis ducimus dolor ab suscipit doloribus dicta minima nisi debitis at. Aliquam quaerat ducimus quo debitis facilis?",
   },
   {
-    question: "4.) What is the answer to this question?",
-    answers: [
-      {
-        answer: "(a) Answer A",
-      },
-      {
-        answer: "(b) Answer B",
-      },
-      {
-        answer: "(c) Answer C",
-      },
-    ],
-    correct_answer: "a",
+    topic4:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam quam, ipsa excepturi qui reiciendis ducimus dolor ab suscipit doloribus dicta minima nisi debitis at. Aliquam quaerat ducimus quo debitis facilis?",
+  },
+  {
+    topic5:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam quam, ipsa excepturi qui reiciendis ducimus dolor ab suscipit doloribus dicta minima nisi debitis at. Aliquam quaerat ducimus quo debitis facilis?",
+  },
+  {
+    topic6:
+      "Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
   },
 ];
 
@@ -83,55 +40,68 @@ const subTopicUlEventListener = () => {
   for (let item of subTopicLi) {
     item.addEventListener("click", () => {
       // hide content image
-      hideTopicContent();
+      showTopicMaterial();
+      // hideTopicContent();
     });
   }
 };
 
-const hideTopicContent = () => {
-  const topicDiv = document.getElementsByClassName("topic-div");
-  for (let item of topicDiv) {
-    item.classList.add("topic-div-hide");
-  }
-  showMaterialsDiv();
+// const hideTopicContent = () => {
+//   const topicDiv = document.getElementsByClassName("topic-div");
+//   for (let item of topicDiv) {
+//     item.classList.add("topic-div-hide");
+//   }
+//   showTopicMaterial();
+// };
+
+// const showTopicContent = () => {
+//   const topicDiv = document.getElementsByClassName("topic-div");
+//   for (let item of topicDiv) {
+//     item.classList.remove("topic-div-hide");
+//   }
+// };
+
+const showTopicMaterial = () => {
+  const topicsDiv = document.getElementById("topics-div");
+  topicsDiv.innerHTML = "";
+  const topicMaterialText = document.createElement("p");
+  topicMaterialText.setAttribute("class", "topic-material-text");
+  topicMaterialText.setAttribute("id", "topic-material-text");
+  topicMaterialText.innerText = tower_material[0].topic1;
+  const topicMaterialText2 = document.createElement("p");
+  topicMaterialText2.setAttribute("class", "topic-material-text");
+  topicMaterialText2.setAttribute("id", "topic-material-text2");
+  topicMaterialText2.innerText = tower_material[1].topic2;
+  const nextBtnDiv = document.createElement("div");
+  nextBtnDiv.setAttribute("class", "tower-next-btn");
+  nextBtnDiv.setAttribute("id", "tower-next-btn");
+  nextBtnDiv.innerText = "Next";
+  topicsDiv.appendChild(topicMaterialText);
+  topicsDiv.appendChild(topicMaterialText2);
+  topicsDiv.appendChild(nextBtnDiv);
+  towerNextBtnEventListener();
 };
 
-const showTopicContent = () => {
-  const topicDiv = document.getElementsByClassName("topic-div");
-  for (let item of topicDiv) {
-    item.classList.remove("topic-div-hide");
-  }
-};
-
-const showMaterialsDiv = () => {
-  const materialsDiv = document.getElementsByClassName("materials-div");
-  for (let item of materialsDiv) {
-    item.classList.add("materials-div-show");
-  }
-  showQuiz();
-};
-
-const showQuiz = () => {
-  console.log(codeBlock);
-  const materialsDiv = document.getElementById("materials-div");
-  const questionDiv = document.createElement("div");
-  questionDiv.setAttribute("class", "question-div");
-  const answerDiv = document.createElement("div");
-  answerDiv.setAttribute("class", "answer-div");
-  questions.map((topic) => {
-    const questionPtag = document.createElement("p");
-    questionPtag.setAttribute("class", "question-ptag");
-    questionPtag.innerText = topic.question;
-    questionDiv.appendChild(questionPtag);
-    topic.answers.map((answer) => {
-      const answerPtag = document.createElement("p");
-      answerPtag.setAttribute("class", "answer-ptag");
-      answerPtag.innerText = answer.answer;
-      answerDiv.appendChild(answerPtag);
-    });
+const towerNextBtnEventListener = () => {
+  const towerNextBtn = document.getElementById("tower-next-btn");
+  towerNextBtn.addEventListener("click", () => {
+    showTopicNextPage();
   });
-  materialsDiv.appendChild(questionDiv);
-  materialsDiv.appendChild(answerDiv);
+};
+
+const showTopicNextPage = () => {
+  const topicText = document.getElementById("topic-material-text");
+  const topicText2 = document.getElementById("topic-material-text2");
+  topicText.innerText = "";
+  topicText.innerText = tower_material[2].topic3;
+  topicText2.innerText = "";
+  topicText2.innerText = tower_material[3].topic4;
+  changeBtnText();
+};
+
+const changeBtnText = () => {
+  const towerNextBtn = document.getElementById("tower-next-btn");
+  towerNextBtn.innerText = "Quiz";
 };
 
 const hideMaterialsDiv = () => {
