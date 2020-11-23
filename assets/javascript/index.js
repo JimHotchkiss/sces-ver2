@@ -147,7 +147,7 @@ const checkSelection = (selectedItemId, selectedItem) => {
     resetMenuItemMargin();
     resetMenuBars();
     resetSelectionDescription();
-    resetSubtopicLiMargin(selectedItem);
+    // resetSubtopicLiMargin(selectedItem);
     showIntroSection();
     hideContentSection();
     // resetshowToTopButton();
@@ -165,7 +165,7 @@ const checkSelection = (selectedItemId, selectedItem) => {
     resetSelectionDescription();
     // showToTopButton();
     changeborderLeft(selectedItem);
-    changeSubtopicLiMargin(selectedItem);
+    // changeSubtopicLiMargin(selectedItem);
     changeDescriptionColor(selectedItem);
     hideIntroSection();
     showContentSection();
@@ -195,15 +195,15 @@ const showIntroSection = () => {
   introductionSection.classList.remove("introduction-hide");
 };
 
-const resetSubtopicLiMargin = (selectedItem) => {
-  const liDivs = selectedItem.children.item(1).children.item(0);
-  liDivs.classList.remove("subtopic-ul-selected");
-};
+// const resetSubtopicLiMargin = (selectedItem) => {
+//   const liDivs = selectedItem.children.item(1).children.item(0);
+//   liDivs.classList.remove("subtopic-ul-selected");
+// };
 
-const changeSubtopicLiMargin = (selectedItem) => {
-  const liDivs = selectedItem.children.item(1).children.item(0);
-  liDivs.classList.add("subtopic-ul-selected");
-};
+// const changeSubtopicLiMargin = (selectedItem) => {
+//   const liDivs = selectedItem.children.item(1).children.item(0);
+//   liDivs.classList.add("subtopic-ul-selected");
+// };
 
 // const resetshowToTopButton = () => {
 //   const buttonDiv = document.getElementById("button");
