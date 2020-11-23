@@ -127,14 +127,9 @@ const tower_material = [
 // };
 
 const selectionsEventListener = () => {
-  console.log("here");
   const selectionDiv = document.getElementsByClassName("selection-description");
   for (let item of selectionDiv) {
     item.addEventListener("click", () => {
-      console.log(
-        item.parentElement.parentElement.children.item(0).children.item(1)
-          .dataset.topic
-      );
       let selectedItem = item.parentElement.parentElement;
       let selectedItemId = item.parentElement.parentElement.children
         .item(0)
@@ -154,6 +149,7 @@ const checkSelection = (selectedItemId, selectedItem) => {
     resetSelectionDescription();
     resetSubtopicLiMargin(selectedItem);
     showIntroSection();
+    hideContentSection();
     // resetshowToTopButton();
     // hideMaterialsDiv();
     // showTopicContent();
@@ -162,6 +158,7 @@ const checkSelection = (selectedItemId, selectedItem) => {
     console.log("else");
     Store.removeSelections();
     Store.addSelections(selectedItemId);
+    hideContentSection();
     resetSelectionDiv();
     resetMenuItemMargin();
     resetMenuBars();
@@ -175,21 +172,21 @@ const checkSelection = (selectedItemId, selectedItem) => {
   }
 };
 
+const hideContentSection = () => {
+  const contentSectionDivs = document.getElementsByClassName("content-section");
+  for (let item of contentSectionDivs) {
+    item.classList.remove("content-section-show");
+  }
+};
+
 const showContentSection = () => {
   const selection = Store.getSelections()[0];
   const contentSection = document.getElementById(selection);
   contentSection.classList.add("content-section-show");
-  // slideInText(contentSection);
 };
-
-// const slideInText = (contentSection) => {
-//   const contextTextDiv = contentSection.children.item(3).children.item(0);
-//   contextTextDiv.classList.add("topics-div-show");
-// };
 
 const hideIntroSection = () => {
   const introductionSection = document.getElementById("introduction");
-  console.log(introductionSection.classList);
   introductionSection.classList.add("introduction-hide");
 };
 
@@ -326,6 +323,7 @@ class Store {
 
   // Add Selections
   static addSelections(selection) {
+    console.log(selection);
     const selections = Store.getSelections();
     selections.push(selection);
     localStorage.setItem("selections", JSON.stringify(selections));
