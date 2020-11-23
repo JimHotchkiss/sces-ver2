@@ -1,9 +1,9 @@
 window.addEventListener("load", (event) => {
   selectionsEventListener();
-  fadeIn();
-  loadPageAtTop();
-  ButtonEventListener();
-  subTopicUlEventListener();
+  // fadeIn();
+  // loadPageAtTop();
+  // ButtonEventListener();
+  // subTopicUlEventListener();
   Store.removeSelections();
 });
 
@@ -35,16 +35,16 @@ const tower_material = [
   },
 ];
 
-const subTopicUlEventListener = () => {
-  const subTopicLi = document.getElementsByClassName("tower-subtopic-li");
-  for (let item of subTopicLi) {
-    item.addEventListener("click", () => {
-      // hide content image
-      showTopicMaterial();
-      // hideTopicContent();
-    });
-  }
-};
+// const subTopicUlEventListener = () => {
+//   const subTopicLi = document.getElementsByClassName("tower-subtopic-li");
+//   for (let item of subTopicLi) {
+//     item.addEventListener("click", () => {
+//       // hide content image
+//       showTopicMaterial();
+//       // hideTopicContent();
+//     });
+//   }
+// };
 
 // const hideTopicContent = () => {
 //   const topicDiv = document.getElementsByClassName("topic-div");
@@ -61,79 +61,84 @@ const subTopicUlEventListener = () => {
 //   }
 // };
 
-const showTopicMaterial = () => {
-  const topicsDiv = document.getElementById("topics-div");
-  topicsDiv.innerHTML = "";
-  const topicMaterialText = document.createElement("p");
-  topicMaterialText.setAttribute("class", "topic-material-text");
-  topicMaterialText.setAttribute("id", "topic-material-text");
-  topicMaterialText.innerText = tower_material[0].topic1;
-  const topicMaterialText2 = document.createElement("p");
-  topicMaterialText2.setAttribute("class", "topic-material-text");
-  topicMaterialText2.setAttribute("id", "topic-material-text2");
-  topicMaterialText2.innerText = tower_material[1].topic2;
-  const nextBtnDiv = document.createElement("div");
-  nextBtnDiv.setAttribute("class", "tower-next-btn");
-  nextBtnDiv.setAttribute("id", "tower-next-btn");
-  nextBtnDiv.innerText = "Next";
-  topicsDiv.appendChild(topicMaterialText);
-  topicsDiv.appendChild(topicMaterialText2);
-  topicsDiv.appendChild(nextBtnDiv);
-  towerNextBtnEventListener();
-};
+// const showTopicMaterial = () => {
+//   const topicsDiv = document.getElementById("topics-div");
+//   topicsDiv.innerHTML = "";
+//   const topicMaterialText = document.createElement("p");
+//   topicMaterialText.setAttribute("class", "topic-material-text");
+//   topicMaterialText.setAttribute("id", "topic-material-text");
+//   topicMaterialText.innerText = tower_material[0].topic1;
+//   const topicMaterialText2 = document.createElement("p");
+//   topicMaterialText2.setAttribute("class", "topic-material-text");
+//   topicMaterialText2.setAttribute("id", "topic-material-text2");
+//   topicMaterialText2.innerText = tower_material[1].topic2;
+//   const nextBtnDiv = document.createElement("div");
+//   nextBtnDiv.setAttribute("class", "tower-next-btn");
+//   nextBtnDiv.setAttribute("id", "tower-next-btn");
+//   nextBtnDiv.innerText = "Next";
+//   topicsDiv.appendChild(topicMaterialText);
+//   topicsDiv.appendChild(topicMaterialText2);
+//   topicsDiv.appendChild(nextBtnDiv);
+//   towerNextBtnEventListener();
+// };
 
-const towerNextBtnEventListener = () => {
-  const towerNextBtn = document.getElementById("tower-next-btn");
-  towerNextBtn.addEventListener("click", () => {
-    showTopicNextPage();
-  });
-};
+// const towerNextBtnEventListener = () => {
+//   const towerNextBtn = document.getElementById("tower-next-btn");
+//   towerNextBtn.addEventListener("click", () => {
+//     showTopicNextPage();
+//   });
+// };
 
-const showTopicNextPage = () => {
-  const topicText = document.getElementById("topic-material-text");
-  const topicText2 = document.getElementById("topic-material-text2");
-  topicText.innerText = "";
-  topicText.innerText = tower_material[2].topic3;
-  topicText2.innerText = "";
-  topicText2.innerText = tower_material[3].topic4;
-  changeBtnText();
-};
+// const showTopicNextPage = () => {
+//   const topicText = document.getElementById("topic-material-text");
+//   const topicText2 = document.getElementById("topic-material-text2");
+//   topicText.innerText = "";
+//   topicText.innerText = tower_material[2].topic3;
+//   topicText2.innerText = "";
+//   topicText2.innerText = tower_material[3].topic4;
+//   changeBtnText();
+// };
 
-const changeBtnText = () => {
-  const towerNextBtn = document.getElementById("tower-next-btn");
-  towerNextBtn.innerText = "Quiz";
-};
+// const changeBtnText = () => {
+//   const towerNextBtn = document.getElementById("tower-next-btn");
+//   towerNextBtn.innerText = "Quiz";
+// };
 
-const hideMaterialsDiv = () => {
-  const materialsDiv = document.getElementsByClassName("materials-div");
-  for (let item of materialsDiv) {
-    item.classList.remove("materials-div-show");
-  }
-};
+// const hideMaterialsDiv = () => {
+//   const materialsDiv = document.getElementsByClassName("materials-div");
+//   for (let item of materialsDiv) {
+//     item.classList.remove("materials-div-show");
+//   }
+// };
 
-const ButtonEventListener = () => {
-  const buttonDiv = document.getElementsByClassName("button-div");
-  for (let item of buttonDiv) {
-    item.addEventListener("click", () => {
-      Store.removeSelections();
-      resetSelectionDiv();
-      resetMenuItemMargin();
-      resetMenuBars();
-      resetSelectionDescription();
-      resetshowToTopButton();
-      window.scrollTo(0, 0);
-    });
-  }
-};
+// const ButtonEventListener = () => {
+//   const buttonDiv = document.getElementsByClassName("button-div");
+//   for (let item of buttonDiv) {
+//     item.addEventListener("click", () => {
+//       Store.removeSelections();
+//       resetSelectionDiv();
+//       resetMenuItemMargin();
+//       resetMenuBars();
+//       resetSelectionDescription();
+//       resetshowToTopButton();
+//       window.scrollTo(0, 0);
+//     });
+//   }
+// };
 
 const selectionsEventListener = () => {
+  console.log("here");
   const selectionDiv = document.getElementsByClassName("selection-description");
   for (let item of selectionDiv) {
     item.addEventListener("click", () => {
+      console.log(
+        item.parentElement.parentElement.children.item(0).children.item(1)
+          .dataset.topic
+      );
       let selectedItem = item.parentElement.parentElement;
       let selectedItemId = item.parentElement.parentElement.children
         .item(0)
-        .children.item(1).id;
+        .children.item(1).dataset.topic;
       checkSelection(selectedItemId, selectedItem);
     });
   }
@@ -148,10 +153,11 @@ const checkSelection = (selectedItemId, selectedItem) => {
     resetMenuBars();
     resetSelectionDescription();
     resetSubtopicLiMargin(selectedItem);
-    resetshowToTopButton();
-    hideMaterialsDiv();
-    showTopicContent();
-    window.scrollTo(0, 0);
+    showIntroSection();
+    // resetshowToTopButton();
+    // hideMaterialsDiv();
+    // showTopicContent();
+    // window.scrollTo(0, 0);
   } else {
     console.log("else");
     Store.removeSelections();
@@ -160,11 +166,36 @@ const checkSelection = (selectedItemId, selectedItem) => {
     resetMenuItemMargin();
     resetMenuBars();
     resetSelectionDescription();
-    showToTopButton();
+    // showToTopButton();
     changeborderLeft(selectedItem);
     changeSubtopicLiMargin(selectedItem);
     changeDescriptionColor(selectedItem);
+    hideIntroSection();
+    showContentSection();
   }
+};
+
+const showContentSection = () => {
+  const selection = Store.getSelections()[0];
+  const contentSection = document.getElementById(selection);
+  contentSection.classList.add("content-section-show");
+  // slideInText(contentSection);
+};
+
+// const slideInText = (contentSection) => {
+//   const contextTextDiv = contentSection.children.item(3).children.item(0);
+//   contextTextDiv.classList.add("topics-div-show");
+// };
+
+const hideIntroSection = () => {
+  const introductionSection = document.getElementById("introduction");
+  console.log(introductionSection.classList);
+  introductionSection.classList.add("introduction-hide");
+};
+
+const showIntroSection = () => {
+  const introductionSection = document.getElementById("introduction");
+  introductionSection.classList.remove("introduction-hide");
 };
 
 const resetSubtopicLiMargin = (selectedItem) => {
@@ -177,15 +208,15 @@ const changeSubtopicLiMargin = (selectedItem) => {
   liDivs.classList.add("subtopic-ul-selected");
 };
 
-const resetshowToTopButton = () => {
-  const buttonDiv = document.getElementById("button");
-  buttonDiv.classList.remove("button-show");
-};
+// const resetshowToTopButton = () => {
+//   const buttonDiv = document.getElementById("button");
+//   buttonDiv.classList.remove("button-show");
+// };
 
-const showToTopButton = () => {
-  const buttonDiv = document.getElementById("button");
-  buttonDiv.classList.add("button-show");
-};
+// const showToTopButton = () => {
+//   const buttonDiv = document.getElementById("button");
+//   buttonDiv.classList.add("button-show");
+// };
 
 const resetSelectionDescription = () => {
   const selectionDescription = document.getElementsByClassName(
@@ -236,9 +267,9 @@ const menuItemMargin = (menuItem) => {
   menuItem.children.item(0).classList.add("menu-icon-selected");
 };
 
-const changeBackground = (selectedItem) => {
-  selectedItem.classList.add("selected-div-selected");
-};
+// const changeBackground = (selectedItem) => {
+//   selectedItem.classList.add("selected-div-selected");
+// };
 
 const menuBar = (menuItem) => {
   const menuBars = menuItem.children.item(0).children;
@@ -248,37 +279,37 @@ const menuBar = (menuItem) => {
 };
 
 // Fade in
-const fadeIn = () => {
-  const faders = document.getElementsByClassName("fade-in");
+// const fadeIn = () => {
+//   const faders = document.getElementsByClassName("fade-in");
 
-  const appearOptions = { threshold: 1 };
-  const appearOnScroll = new IntersectionObserver(function (
-    entries,
-    appearOnScroll
-  ) {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) {
-        entry.target.classList.remove("appear");
-        return;
-      }
-      entry.target.classList.add("appear");
-      lockScroll();
-    });
-  },
-  appearOptions);
+//   const appearOptions = { threshold: 1 };
+//   const appearOnScroll = new IntersectionObserver(function (
+//     entries,
+//     appearOnScroll
+//   ) {
+//     entries.forEach((entry) => {
+//       if (!entry.isIntersecting) {
+//         entry.target.classList.remove("appear");
+//         return;
+//       }
+//       entry.target.classList.add("appear");
+//       lockScroll();
+//     });
+//   },
+//   appearOptions);
 
-  for (const fader of faders) {
-    appearOnScroll.observe(fader);
-  }
-};
+//   for (const fader of faders) {
+//     appearOnScroll.observe(fader);
+//   }
+// };
 
-const loadPageAtTop = () => {
-  window.scrollTo(0, 0);
-};
+// const loadPageAtTop = () => {
+//   window.scrollTo(0, 0);
+// };
 
-const lockScroll = () => {
-  document.body.classList.add("no-scroll");
-};
+// const lockScroll = () => {
+//   document.body.classList.add("no-scroll");
+// };
 
 // Store Class: Handles User's Selections
 class Store {
