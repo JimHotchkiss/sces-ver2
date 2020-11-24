@@ -178,16 +178,16 @@
 .content-section {
    opacity: 0;
    max-height: 0px;
-   transform: translateX(-200px);
-   /* transition: 0.3s all ease-in-out; */
+   transform: translateY(-100px);
 }
 
 .content-section.content-section-show {
     display: flex;
+    max-width: 1155px;
     flex-direction: column;
     opacity: 1;
-    transform: translateX(0px);
-    transition: 0.6s all ease-in-out 0.3s;
+    transform: translateY(0px);
+    transition: 0.6s all ease-out 0.5s;
 }
 
 
@@ -491,9 +491,10 @@
 .introduction {
     display: flex;
     margin-left: 10%;
+    max-height: 1000px;
     opacity: 1;
     transform: translateY(0px);
-    transition: 0.3s all ease-in-out;
+    transition: 0.4s  ease-in;
 }
 
 
@@ -501,7 +502,7 @@
     opacity: 0;
     max-height: 0px;
     transform: translateY(20px);
-    transition: 0.4s all ease-in-out;
+    transition: 0.4s  ease-in;
 }
 
 .introduction-content-section-title h1 {
