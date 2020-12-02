@@ -1,11 +1,12 @@
 window.addEventListener("load", (event) => {
-  selectionsEventListener();
+  selectionsEventListener()
   // fadeIn();
   // loadPageAtTop();
   // ButtonEventListener();
   // subTopicUlEventListener();
-  Store.removeSelections();
-});
+  Store.removeSelections()
+  subTopicEventListener()
+})
 
 // Content Material
 const tower_material = [
@@ -33,7 +34,7 @@ const tower_material = [
     topic6:
       "Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
   },
-];
+]
 
 // const subTopicUlEventListener = () => {
 //   const subTopicLi = document.getElementsByClassName("tower-subtopic-li");
@@ -126,74 +127,83 @@ const tower_material = [
 //   }
 // };
 
+const subTopicEventListener = () => {
+  const towerSubtopicLic = document.getElementsByClassName("tower-subtopic-li")
+  for (let item of towerSubtopicLic) {
+    item.addEventListener("click", (event) => {
+      console.log(event.target.dataset.topic)
+    })
+  }
+}
+
 const selectionsEventListener = () => {
-  const selectionDiv = document.getElementsByClassName("selection-description");
+  const selectionDiv = document.getElementsByClassName("selection-description")
   for (let item of selectionDiv) {
     item.addEventListener("click", () => {
-      let selectedItem = item.parentElement.parentElement;
+      let selectedItem = item.parentElement.parentElement
       let selectedItemId = item.parentElement.parentElement.children
         .item(0)
-        .children.item(1).dataset.topic;
-      checkSelection(selectedItemId, selectedItem);
-    });
+        .children.item(1).dataset.topic
+      checkSelection(selectedItemId, selectedItem)
+    })
   }
-};
+}
 
 const checkSelection = (selectedItemId, selectedItem) => {
   if (Store.getSelections()[0] === selectedItemId) {
-    console.log("if");
-    Store.removeSelections();
-    resetSelectionDiv();
-    resetMenuItemMargin();
-    resetMenuBars();
-    resetSelectionDescription();
+    console.log("if")
+    Store.removeSelections()
+    resetSelectionDiv()
+    resetMenuItemMargin()
+    resetMenuBars()
+    resetSelectionDescription()
     // resetSubtopicLiMargin(selectedItem);
-    showIntroSection();
-    hideContentSection();
+    showIntroSection()
+    hideContentSection()
     // resetshowToTopButton();
     // hideMaterialsDiv();
     // showTopicContent();
     // window.scrollTo(0, 0);
   } else {
-    console.log("else");
-    Store.removeSelections();
-    Store.addSelections(selectedItemId);
-    hideContentSection();
-    resetSelectionDiv();
-    resetMenuItemMargin();
-    resetMenuBars();
-    resetSelectionDescription();
+    console.log("else")
+    Store.removeSelections()
+    Store.addSelections(selectedItemId)
+    hideContentSection()
+    resetSelectionDiv()
+    resetMenuItemMargin()
+    resetMenuBars()
+    resetSelectionDescription()
     // showToTopButton();
-    changeborderLeft(selectedItem);
+    changeborderLeft(selectedItem)
     // changeSubtopicLiMargin(selectedItem);
-    changeDescriptionColor(selectedItem);
-    hideIntroSection();
-    showContentSection();
+    changeDescriptionColor(selectedItem)
+    hideIntroSection()
+    showContentSection()
   }
-};
+}
 
 const hideContentSection = () => {
-  const contentSectionDivs = document.getElementsByClassName("content-section");
+  const contentSectionDivs = document.getElementsByClassName("content-section")
   for (let item of contentSectionDivs) {
-    item.classList.remove("content-section-show");
+    item.classList.remove("content-section-show")
   }
-};
+}
 
 const showContentSection = () => {
-  const selection = Store.getSelections()[0];
-  const contentSection = document.getElementById(selection);
-  contentSection.classList.add("content-section-show");
-};
+  const selection = Store.getSelections()[0]
+  const contentSection = document.getElementById(selection)
+  contentSection.classList.add("content-section-show")
+}
 
 const hideIntroSection = () => {
-  const introductionSection = document.getElementById("introduction");
-  introductionSection.classList.add("introduction-hide");
-};
+  const introductionSection = document.getElementById("introduction")
+  introductionSection.classList.add("introduction-hide")
+}
 
 const showIntroSection = () => {
-  const introductionSection = document.getElementById("introduction");
-  introductionSection.classList.remove("introduction-hide");
-};
+  const introductionSection = document.getElementById("introduction")
+  introductionSection.classList.remove("introduction-hide")
+}
 
 // const resetSubtopicLiMargin = (selectedItem) => {
 //   const liDivs = selectedItem.children.item(1).children.item(0);
@@ -218,62 +228,62 @@ const showIntroSection = () => {
 const resetSelectionDescription = () => {
   const selectionDescription = document.getElementsByClassName(
     "selection-description"
-  );
+  )
   for (let item of selectionDescription) {
-    item.classList.remove("selection-description-selected");
+    item.classList.remove("selection-description-selected")
   }
-};
+}
 
 const resetMenuBars = () => {
-  const menuIcon = document.getElementsByClassName("menu-icon");
+  const menuIcon = document.getElementsByClassName("menu-icon")
   for (let item of menuIcon) {
-    let menuCollection = item.children;
+    let menuCollection = item.children
     for (let menuItem of menuCollection) {
-      menuItem.classList.remove("menu-bar-selected");
+      menuItem.classList.remove("menu-bar-selected")
     }
   }
-};
+}
 
 const resetMenuItemMargin = () => {
-  const menuItem = document.getElementsByClassName("menu-icon");
+  const menuItem = document.getElementsByClassName("menu-icon")
   for (let item of menuItem) {
-    item.classList.remove("menu-icon-selected");
+    item.classList.remove("menu-icon-selected")
   }
-};
+}
 
 const resetSelectionDiv = () => {
-  const selectionDiv = document.getElementsByClassName("selection-description");
+  const selectionDiv = document.getElementsByClassName("selection-description")
   for (let item of selectionDiv) {
-    item.parentElement.parentElement.classList.remove("selection-div-selected");
+    item.parentElement.parentElement.classList.remove("selection-div-selected")
   }
-};
+}
 
 const changeDescriptionColor = (selectedItem) => {
-  const selectionDescription = selectedItem.children.item(0).children.item(1);
-  selectionDescription.classList.add("selection-description-selected");
-};
+  const selectionDescription = selectedItem.children.item(0).children.item(1)
+  selectionDescription.classList.add("selection-description-selected")
+}
 
 const changeborderLeft = (selectedItem) => {
-  let menuItem = selectedItem.children.item(0);
-  menuItemMargin(menuItem);
-  menuBar(menuItem);
-  selectedItem.classList.add("selection-div-selected");
-};
+  let menuItem = selectedItem.children.item(0)
+  menuItemMargin(menuItem)
+  menuBar(menuItem)
+  selectedItem.classList.add("selection-div-selected")
+}
 
 const menuItemMargin = (menuItem) => {
-  menuItem.children.item(0).classList.add("menu-icon-selected");
-};
+  menuItem.children.item(0).classList.add("menu-icon-selected")
+}
 
 // const changeBackground = (selectedItem) => {
 //   selectedItem.classList.add("selected-div-selected");
 // };
 
 const menuBar = (menuItem) => {
-  const menuBars = menuItem.children.item(0).children;
+  const menuBars = menuItem.children.item(0).children
   for (let item of menuBars) {
-    item.classList.add("menu-bar-selected");
+    item.classList.add("menu-bar-selected")
   }
-};
+}
 
 // Fade in
 // const fadeIn = () => {
@@ -312,27 +322,26 @@ const menuBar = (menuItem) => {
 class Store {
   // Get selection
   static getSelections() {
-    let selections;
+    let selections
     if (localStorage.getItem("selections") === null) {
-      selections = [];
+      selections = []
     } else {
-      selections = JSON.parse(localStorage.getItem("selections"));
+      selections = JSON.parse(localStorage.getItem("selections"))
     }
-    return selections;
+    return selections
   }
 
   // Add Selections
   static addSelections(selection) {
-    console.log(selection);
-    const selections = Store.getSelections();
-    selections.push(selection);
-    localStorage.setItem("selections", JSON.stringify(selections));
+    const selections = Store.getSelections()
+    selections.push(selection)
+    localStorage.setItem("selections", JSON.stringify(selections))
   }
 
   // Remove selections
   static removeSelections(index) {
-    const selections = Store.getSelections();
-    selections.length = 0;
-    localStorage.setItem("selections", JSON.stringify(selections));
+    const selections = Store.getSelections()
+    selections.length = 0
+    localStorage.setItem("selections", JSON.stringify(selections))
   }
 }

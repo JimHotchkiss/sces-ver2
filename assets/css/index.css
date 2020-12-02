@@ -317,7 +317,7 @@
     height: auto;
     max-height: 1000px;
     overflow-y: hidden;
-    transition: max-height 0.4s ease-in-out, border-left 0.3s ease 0.0s;
+    transition: max-height 0.9s ease-in-out, border-left 0.3s ease 0.0s;
 }
 
 
@@ -426,13 +426,22 @@
 }
 
 .selection-progress-img{
-    margin-top: 19px;
+    /* margin-top: 19px;
     margin-left: auto;
     margin-right: 8px;
     width: 20px;
     height:20px;
     background: transparent url("../img/checkmark.png") 0% 0% no-repeat;
-    background-size: 20px;
+    background-size: 20px; */
+}
+
+.subtopic-checkmark-img {
+    margin-right: 32px;
+   margin-left: auto;
+    width: 18px;
+    height:18px;
+    background: transparent url("../img/checkmark2.png") 0% 0% no-repeat;
+    background-size: 18px;
 }
 
 
@@ -553,19 +562,34 @@
      border-bottom: 5px solid #ffb600;
    }
 
-.subtopic-ul li {
-    list-style: none;
-    margin-top: 16px;
+.subtopic-div-container {
+    margin-top: 12px;
+}
+
+.subtopic-div {
+  display: flex;
+  padding: 12px 0px 12px 0px;
+}
+
+.subtopic-div-bottom {
+    /* background: blue; */
     margin-bottom: 16px;
+}
+
+
+.subtopic-div p {
+   padding: 0;
     margin-left: 54px;
     font-family: 'Lato', sans-serif;
     font-size: 13px;
     font-style: italic;
     opacity: 0.3;
-    color: #212121;
+    color: #212121; 
 }
 
-.subtopic-ul li:hover {
+
+
+.subtopic-div p:hover {
     cursor: pointer;
    opacity: 1;
    transition: 0.3s;
