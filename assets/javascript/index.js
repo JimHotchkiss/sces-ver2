@@ -2,10 +2,11 @@ window.addEventListener("load", (event) => {
   selectionsEventListener()
   // fadeIn();
   // loadPageAtTop();
-  // ButtonEventListener();
+  // Bsubtopics-ulttonEventListener();
   Store.removeSelections()
-  Skills.removeSubtopic()
+  Skills.removeSubtopicArray()
   subTopicEventListener()
+  nextSubtopicEventListener()
 })
 
 // Content Material
@@ -42,99 +43,15 @@ const tower_material = [
   },
 ]
 
-// const hideTopicContent = () => {
-//   const topicDiv = document.getElementsByClassName("topic-div");
-//   for (let item of topicDiv) {
-//     item.classList.add("topic-div-hide");
-//   }
-//   showTopicMaterial();
-// };
-
-// const showTopicContent = () => {
-//   const topicDiv = document.getElementsByClassName("topic-div");
-//   for (let item of topicDiv) {
-//     item.classList.remove("topic-div-hide");
-//   }
-// };
-
-// const showTopicMaterial = () => {
-//   const topicsDiv = document.getElementById("topics-div");
-//   topicsDiv.innerHTML = "";
-//   const topicMaterialText = document.createElement("p");
-//   topicMaterialText.setAttribute("class", "topic-material-text");
-//   topicMaterialText.setAttribute("id", "topic-material-text");
-//   topicMaterialText.innerText = tower_material[0].topic1;
-//   const topicMaterialText2 = document.createElement("p");
-//   topicMaterialText2.setAttribute("class", "topic-material-text");
-//   topicMaterialText2.setAttribute("id", "topic-material-text2");
-//   topicMaterialText2.innerText = tower_material[1].topic2;
-//   const nextBtnDiv = document.createElement("div");
-//   nextBtnDiv.setAttribute("class", "tower-next-btn");
-//   nextBtnDiv.setAttribute("id", "tower-next-btn");
-//   nextBtnDiv.innerText = "Next";
-//   topicsDiv.appendChild(topicMaterialText);
-//   topicsDiv.appendChild(topicMaterialText2);
-//   topicsDiv.appendChild(nextBtnDiv);
-//   towerNextBtnEventListener();
-// };
-
-// const towerNextBtnEventListener = () => {
-//   const towerNextBtn = document.getElementById("tower-next-btn");
-//   towerNextBtn.addEventListener("click", () => {
-//     showTopicNextPage();
-//   });
-// };
-
-// const showTopicNextPage = () => {
-//   const topicText = document.getElementById("topic-material-text");
-//   const topicText2 = document.getElementById("topic-material-text2");
-//   topicText.innerText = "";
-//   topicText.innerText = tower_material[2].topic3;
-//   topicText2.innerText = "";
-//   topicText2.innerText = tower_material[3].topic4;
-//   changeBtnText();
-// };
-
-// const changeBtnText = () => {
-//   const towerNextBtn = document.getElementById("tower-next-btn");
-//   towerNextBtn.innerText = "Quiz";
-// };
-
-// const hideMaterialsDiv = () => {
-//   const materialsDiv = document.getElementsByClassName("materials-div");
-//   for (let item of materialsDiv) {
-//     item.classList.remove("materials-div-show");
-//   }
-// };
-
-// const ButtonEventListener = () => {
-//   const buttonDiv = document.getElementsByClassName("button-div");
-//   for (let item of buttonDiv) {
-//     item.addEventListener("click", () => {
-//       Store.removeSelections();
-//       resetSelectionDiv();
-//       resetMenuItemMargin();
-//       resetMenuBars();
-//       resetSelectionDescription();
-//       resetshowToTopButton();
-//       window.scrollTo(0, 0);
-//     });
-//   }
-// };
-
-const subTopicEventListener = () => {
-  const subTopicDivs = document.getElementsByClassName("subtopic-div")
-  for (let item of subTopicDivs) {
-    item.firstChild.addEventListener("click", () => {
-      const selection = item.firstChild.dataset.subtopic
-      hideSubtopicsUl()
-      changeSubtopicTextColor(item.firstChild)
-      populateSubtopicContent(selection)
-    })
-  }
+const nextSubtopicEventListener = () => {
+  const subtopicNextButton = document.getElementById("subtopic-next-button")
+  subtopicNextButton.addEventListener("click", () => {
+    // change subtopicTextColor
+    changeSubtopicTextColor()
+  })
 }
 
-const changeSubtopicTextColor = (selection) => {
+const changeSubtopicTextColor = () => {
   console.log(selection)
   if (selection.classList.value === "subtopic1-text") {
     console.log(selection)
@@ -143,6 +60,23 @@ const changeSubtopicTextColor = (selection) => {
     selection.classList.add("subtopic2-text-color")
   }
 }
+
+const subTopicEventListener = () => {
+  const subTopicDivs = document.getElementsByClassName("subtopic-div")
+  for (let item of subTopicDivs) {
+    item.firstChild.addEventListener("click", () => {
+      const selection = item.firstChild.dataset.subtopic
+      Skills.addSubtopic(selection)
+      hideSubtopicsUl()
+      // changeSubtopicTextColor(item.firstChild)
+      populateSubtopicContent(selection)
+    })
+  }
+}
+
+// const changeSubtopicTextColor = (selection) => {
+
+// }
 
 const hideSubtopicsUl = () => {
   const subtopicsUl = document.getElementById("subtopics-ul")
@@ -201,6 +135,7 @@ const checkSelection = (selectedItemId, selectedItem) => {
     Store.addSelections(selectedItemId)
     hideContentSection()
     resetSelectionDiv()
+    resetSubTopicMaterialDiv()
     resetSubtopicTextColor()
     resetMenuItemMargin()
     resetMenuBars()
@@ -213,6 +148,23 @@ const checkSelection = (selectedItemId, selectedItem) => {
     showContentSection()
     loadSubTopics(selectedItem)
   }
+}
+
+const resetSubTopicMaterialDiv = () => {
+  const subtopicsUl = document.getElementById("subtopics-ul")
+  subtopicsUl.classList.remove("subtopic-ul-hide")
+  resetMaterialText()
+  resetNextButton()
+}
+
+const resetMaterialText = () => {
+  const subtopicMaterialText = document.getElementById("subtopic-material-text")
+  subtopicMaterialText.innerText = ""
+}
+
+const resetNextButton = () => {
+  const subtopicNextButton = document.getElementById("subtopic-next-button")
+  subtopicNextButton.classList.remove("subtopic-next-button-show")
 }
 
 const resetSubtopicTextColor = () => {
@@ -238,7 +190,7 @@ const loadSubTopics = (selectedItem) => {
   for (item of subTopics) {
     subTopicsArray.push(item.dataset.subtopic)
   }
-  Skills.addSubtopic(subTopicsArray)
+  Skills.addSubtopicArray(subTopicsArray)
 }
 
 const hideContentSection = () => {
@@ -263,26 +215,6 @@ const showIntroSection = () => {
   const introductionSection = document.getElementById("introduction")
   introductionSection.classList.remove("introduction-hide")
 }
-
-// const resetSubtopicLiMargin = (selectedItem) => {
-//   const liDivs = selectedItem.children.item(1).children.item(0);
-//   liDivs.classList.remove("subtopic-ul-selected");
-// };
-
-// const changeSubtopicLiMargin = (selectedItem) => {
-//   const liDivs = selectedItem.children.item(1).children.item(0);
-//   liDivs.classList.add("subtopic-ul-selected");
-// };
-
-// const resetshowToTopButton = () => {
-//   const buttonDiv = document.getElementById("button");
-//   buttonDiv.classList.remove("button-show");
-// };
-
-// const showToTopButton = () => {
-//   const buttonDiv = document.getElementById("button");
-//   buttonDiv.classList.add("button-show");
-// };
 
 const resetSelectionDescription = () => {
   const selectionDescription = document.getElementsByClassName(
@@ -344,39 +276,6 @@ const menuBar = (menuItem) => {
   }
 }
 
-// Fade in
-// const fadeIn = () => {
-//   const faders = document.getElementsByClassName("fade-in");
-
-//   const appearOptions = { threshold: 1 };
-//   const appearOnScroll = new IntersectionObserver(function (
-//     entries,
-//     appearOnScroll
-//   ) {
-//     entries.forEach((entry) => {
-//       if (!entry.isIntersecting) {
-//         entry.target.classList.remove("appear");
-//         return;
-//       }
-//       entry.target.classList.add("appear");
-//       lockScroll();
-//     });
-//   },
-//   appearOptions);
-
-//   for (const fader of faders) {
-//     appearOnScroll.observe(fader);
-//   }
-// };
-
-// const loadPageAtTop = () => {
-//   window.scrollTo(0, 0);
-// };
-
-// const lockScroll = () => {
-//   document.body.classList.add("no-scroll");
-// };
-
 // Store Class: Handles User's Selections
 class Store {
   // Get selection
@@ -409,35 +308,57 @@ class Store {
 // Skills Class - Handles users skills progress
 class Skills {
   // a function that grabs all the subtopics?
-  static getSubtopics() {
-    let subTopicSelections
-    if (localStorage.getItem("subTopicSelections") === null) {
-      subTopicSelections = []
+  static getSubtopicsArray() {
+    let subTopicSelectionsArray
+    if (localStorage.getItem("subTopicSelectionsArray") === null) {
+      subTopicSelectionsArray = []
     } else {
-      subTopicSelections = JSON.parse(
-        localStorage.getItem("subTopicSelections")
+      subTopicSelectionsArray = JSON.parse(
+        localStorage.getItem("subTopicSelectionsArray")
       )
     }
-    return subTopicSelections
+    return subTopicSelectionsArray
   }
 
-  static addSubtopic(subTopicsArray) {
-    let subTopicSelections = Skills.getSubtopics()
-    subTopicsArray.map((subTopic) => subTopicSelections.push(subTopic))
+  static getSubTopics() {
+    let subTopics
+    if (localStorage.getItem("subTopics") === null) {
+      subTopics = []
+    } else {
+      subTopics = JSON.parse(localStorage.getItem("subTopics"))
+    }
+    return subTopics
+  }
+
+  static addSubtopicArray(subTopicsArray) {
+    let subTopicSelectionsArray = Skills.getSubtopicsArray()
+    subTopicsArray.map((subTopic) => subTopicSelectionsArray.push(subTopic))
 
     localStorage.setItem(
-      "subTopicSelections",
-      JSON.stringify(subTopicSelections)
+      "subTopicSelectionsArray",
+      JSON.stringify(subTopicSelectionsArray)
     )
-    console.log(subTopicSelections)
+  }
+
+  static addSubtopic(selectedItem) {
+    const subtopics = Skills.getSubTopics()
+    subtopics.push(selectedItem)
+    localStorage.setItem("subTopicSelections", JSON.stringify(subtopics))
+    console.log(subtopics)
   }
 
   static removeSubtopic() {
-    const subTopicSelections = Skills.getSubtopics()
-    subTopicSelections.length = 0
+    const subtopicSelections = Skills.getSubTopics()
+    subtopicSelections.length = 0
+    localStorage.setItem("subtopic")
+  }
+
+  static removeSubtopicArray() {
+    const subTopicSelectionsArray = Skills.getSubtopicsArray()
+    subTopicSelectionsArray.length = 0
     localStorage.setItem(
-      "subTopicSelections",
-      JSON.stringify(subTopicSelections)
+      "subTopicSelectionsArray",
+      JSON.stringify(subTopicSelectionsArray)
     )
   }
 }
