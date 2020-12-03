@@ -5,6 +5,7 @@ window.addEventListener("load", (event) => {
   // ButtonEventListener();
   // subTopicUlEventListener();
   Store.removeSelections()
+  Skills.removeSubtopic()
   subTopicEventListener()
 })
 
@@ -128,10 +129,11 @@ const tower_material = [
 // };
 
 const subTopicEventListener = () => {
-  const towerSubtopicLic = document.getElementsByClassName("tower-subtopic-li")
+  const towerSubtopicLic = document.getElementsByClassName("subtopic-text")
   for (let item of towerSubtopicLic) {
     item.addEventListener("click", (event) => {
-      console.log(event.target.dataset.topic)
+      const subTopic = event.target.dataset.subtopic
+      Skills.addSubtopic(subTopic)
     })
   }
 }
@@ -328,7 +330,6 @@ class Store {
     } else {
       selections = JSON.parse(localStorage.getItem("selections"))
     }
-    console.log(selections)
     return selections
   }
 
@@ -348,3 +349,35 @@ class Store {
 }
 
 // Skills Class - Handles users skills progress
+class Skills {
+  // a function that grabs all the subtopics?
+  static getSubtopics() {
+    let subTopicSelections
+    if (localStorage.getItem("subTopicSelections") === null) {
+      subTopicSelections = []
+    } else {
+      subTopicSelections = JSON.parse(
+        localStorage.getItem("subTopicSelections")
+      )
+    }
+    return subTopicSelections
+  }
+
+  static addSubtopic(subTopic) {
+    let subTopicSelections = Skills.getSubtopics()
+    subTopicSelections.push(subTopic)
+    localStorage.setItem(
+      "subTopicSelections",
+      JSON.stringify(subTopicSelections)
+    )
+  }
+
+  static removeSubtopic() {
+    const subTopicSelections = Skills.getSubtopics()
+    subTopicSelections.length = 0
+    localStorage.setItem(
+      "subTopicSelections",
+      JSON.stringify(subTopicSelections)
+    )
+  }
+}
