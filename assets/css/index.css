@@ -225,7 +225,7 @@
 }
 
 .content-section-progress-bar {
-    width: 67%;
+    width: 33%;
     height: 3px;
     border-radius: 1px;
     background: #ffb600; 
@@ -426,22 +426,22 @@
 }
 
 .selection-progress-img{
-    /* margin-top: 19px;
+    margin-top: 14px;
     margin-left: auto;
-    margin-right: 8px;
+    margin-right: 16px;
     width: 20px;
-    height:20px;
-    background: transparent url("../img/checkmark.png") 0% 0% no-repeat;
-    background-size: 20px; */
+    height:30px;
+    background: transparent url("../img/badge.png") 0% 0% no-repeat;
+    background-size: 20px;
 }
 
 .subtopic-checkmark-img {
-    margin-right: 32px;
+    margin-right: 18px;
    margin-left: auto;
-    width: 18px;
-    height:18px;
+    width: 16px;
+    height:16px;
     background: transparent url("../img/checkmark2.png") 0% 0% no-repeat;
-    background-size: 18px;
+    background-size: 16px;
 }
 
 
