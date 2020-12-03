@@ -135,7 +135,9 @@ const subTopicEventListener = () => {
 }
 
 const changeSubtopicTextColor = (selection) => {
-  if (selection.dataset.subtopic === "topic 1") {
+  console.log(selection)
+  if (selection.classList.value === "subtopic1-text") {
+    console.log(selection)
     selection.classList.add("subtopic1-text-color")
   } else {
     selection.classList.add("subtopic2-text-color")
@@ -199,6 +201,7 @@ const checkSelection = (selectedItemId, selectedItem) => {
     Store.addSelections(selectedItemId)
     hideContentSection()
     resetSelectionDiv()
+    resetSubtopicTextColor()
     resetMenuItemMargin()
     resetMenuBars()
     resetSelectionDescription()
@@ -210,6 +213,18 @@ const checkSelection = (selectedItemId, selectedItem) => {
     showContentSection()
     loadSubTopics(selectedItem)
   }
+}
+
+const resetSubtopicTextColor = () => {
+  const subtopic1Text = document.getElementsByClassName("subtopic1-text")
+  for (item of subtopic1Text) {
+    item.classList.remove("subtopic1-text-color")
+  }
+  // if (selection.dataset.subtopic === "topic 1") {
+  //   selection.classList.add("subtopic1-text-color")
+  // } else {
+  //   selection.classList.add("subtopic2-text-color")
+  // }
 }
 
 const loadSubTopics = (selectedItem) => {

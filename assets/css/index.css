@@ -592,6 +592,16 @@
     color: #212121; 
 }
 
+.subtopic2-text {
+    padding: 0;
+    margin-left: 54px;
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    font-style: italic;
+    opacity: 0.3;
+    color: #212121; 
+}
+
 .subtopic1-text-color {
     opacity: 1.0;
 }
