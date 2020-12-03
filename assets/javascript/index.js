@@ -346,3 +346,5 @@ class Store {
     localStorage.setItem("selections", JSON.stringify(selections))
   }
 }
+
+// Skills Class - Handles users skills progress
