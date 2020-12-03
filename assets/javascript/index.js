@@ -3,7 +3,6 @@ window.addEventListener("load", (event) => {
   // fadeIn();
   // loadPageAtTop();
   // ButtonEventListener();
-  // subTopicUlEventListener();
   Store.removeSelections()
   Skills.removeSubtopic()
   subTopicEventListener()
@@ -12,41 +11,36 @@ window.addEventListener("load", (event) => {
 // Content Material
 const tower_material = [
   {
-    topic1:
-      "Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
+    name: "topic 1",
+    description:
+      "Topic 1Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
   },
   {
-    topic2:
-      "Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
+    name: "topic 2",
+    description:
+      "Topic 2Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
   },
   {
-    topic3:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam quam, ipsa excepturi qui reiciendis ducimus dolor ab suscipit doloribus dicta minima nisi debitis at. Aliquam quaerat ducimus quo debitis facilis?",
+    name: "topic 3",
+    description:
+      "Topic 3Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
   },
   {
-    topic4:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam quam, ipsa excepturi qui reiciendis ducimus dolor ab suscipit doloribus dicta minima nisi debitis at. Aliquam quaerat ducimus quo debitis facilis?",
+    name: "topic 4",
+    description:
+      "Topic 4 Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
   },
   {
-    topic5:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam quam, ipsa excepturi qui reiciendis ducimus dolor ab suscipit doloribus dicta minima nisi debitis at. Aliquam quaerat ducimus quo debitis facilis?",
+    name: "topic 5",
+    description:
+      "Topic 5Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
   },
   {
-    topic6:
-      "Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
+    name: "topic 6",
+    description:
+      "Topic 6Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
   },
 ]
-
-// const subTopicUlEventListener = () => {
-//   const subTopicLi = document.getElementsByClassName("tower-subtopic-li");
-//   for (let item of subTopicLi) {
-//     item.addEventListener("click", () => {
-//       // hide content image
-//       showTopicMaterial();
-//       // hideTopicContent();
-//     });
-//   }
-// };
 
 // const hideTopicContent = () => {
 //   const topicDiv = document.getElementsByClassName("topic-div");
@@ -129,13 +123,46 @@ const tower_material = [
 // };
 
 const subTopicEventListener = () => {
-  const towerSubtopicLic = document.getElementsByClassName("subtopic-text")
-  for (let item of towerSubtopicLic) {
-    item.addEventListener("click", (event) => {
-      const subTopic = event.target.dataset.subtopic
-      Skills.addSubtopic(subTopic)
+  const subTopicDivs = document.getElementsByClassName("subtopic-div")
+  for (let item of subTopicDivs) {
+    item.firstChild.addEventListener("click", () => {
+      const selection = item.firstChild.dataset.subtopic
+      hideSubtopicsUl()
+      changeSubtopicTextColor(item.firstChild)
+      populateSubtopicContent(selection)
     })
   }
+}
+
+const changeSubtopicTextColor = (selection) => {
+  if (selection.dataset.subtopic === "topic 1") {
+    selection.classList.add("subtopic1-text-color")
+  } else {
+    selection.classList.add("subtopic2-text-color")
+  }
+}
+
+const hideSubtopicsUl = () => {
+  const subtopicsUl = document.getElementById("subtopics-ul")
+  subtopicsUl.classList.add("subtopic-ul-hide")
+}
+
+const populateSubtopicContent = (selection) => {
+  tower_material.map((item) => {
+    if (item.name === selection) {
+      const subtopicMaterialDiv = document.getElementById(
+        "subtopic-material-text"
+      )
+      subtopicMaterialDiv.innerText = item.description
+      subtopicMaterialDiv.classList.add("subtopic-material-text-animate")
+    }
+  })
+  showNextBtn()
+}
+
+const showNextBtn = () => {
+  const subtopicNextButton = document.getElementById("subtopic-next-button")
+  subtopicNextButton.classList.add("subtopic-next-button-show")
 }
 
 const selectionsEventListener = () => {
@@ -181,7 +208,22 @@ const checkSelection = (selectedItemId, selectedItem) => {
     changeDescriptionColor(selectedItem)
     hideIntroSection()
     showContentSection()
+    loadSubTopics(selectedItem)
   }
+}
+
+const loadSubTopics = (selectedItem) => {
+  const subTopicsArray = []
+  let subTopics
+  if (selectedItem.id === "topic-one") {
+    subTopics = document.getElementsByClassName("subtopic1-text")
+  } else {
+    subTopics = document.getElementsByClassName("subtopic2-text")
+  }
+  for (item of subTopics) {
+    subTopicsArray.push(item.dataset.subtopic)
+  }
+  Skills.addSubtopic(subTopicsArray)
 }
 
 const hideContentSection = () => {
@@ -335,6 +377,7 @@ class Store {
 
   // Add Selections
   static addSelections(selection) {
+    console.log(selection)
     const selections = Store.getSelections()
     selections.push(selection)
     localStorage.setItem("selections", JSON.stringify(selections))
@@ -363,13 +406,15 @@ class Skills {
     return subTopicSelections
   }
 
-  static addSubtopic(subTopic) {
+  static addSubtopic(subTopicsArray) {
     let subTopicSelections = Skills.getSubtopics()
-    subTopicSelections.push(subTopic)
+    subTopicsArray.map((subTopic) => subTopicSelections.push(subTopic))
+
     localStorage.setItem(
       "subTopicSelections",
       JSON.stringify(subTopicSelections)
     )
+    console.log(subTopicSelections)
   }
 
   static removeSubtopic() {
