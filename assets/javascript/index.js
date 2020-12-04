@@ -6,50 +6,43 @@ window.addEventListener("load", (event) => {
   Store.removeSelections()
   Skills.removeSubtopicArray()
   subTopicEventListener()
-  nextSubtopicEventListener()
 })
 
 // Content Material
 const tower_material = [
   {
-    name: "topic 1",
-    description:
-      "Topic 1Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
+    name: "Maneuvers monitor",
+    competencies: [
+      {
+        "competency 1": "Turns black knob to unlock mounting arm",
+      },
+      {
+        "competency 2": "Uses flat panel bracket to move monitor",
+      },
+      {
+        "competency 3":
+          "Locks black knob to lock monitor when moving tower to different location",
+      },
+      {
+        "competency 4": "States troubleshooting if monitor is blank",
+      },
+    ],
   },
   {
-    name: "topic 2",
-    description:
-      "Topic 2Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
-  },
-  {
-    name: "topic 3",
-    description:
-      "Topic 3Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
-  },
-  {
-    name: "topic 4",
-    description:
-      "Topic 4 Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
-  },
-  {
-    name: "topic 5",
-    description:
-      "Topic 5Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
-  },
-  {
-    name: "topic 6",
-    description:
-      "Topic 6Dicta sapiente in reprehenderit praesentium cum quibusdam assumenda possimus minima! Impedit totam doloribus autem laboriosam nulla deleniti debitis eaque quas pariatur fuga. Ex fuga incidunt optio ipsam adipisci quidem voluptatem.",
+    name: "Turns on Tower",
+    competencies: [
+      {
+        "competency 1": "Plugs in",
+      },
+      {
+        "competency 2": "Flips main switch on front of tower",
+      },
+      {
+        "competency 3": "Presses green power button on SDC3- has flip screen",
+      },
+    ],
   },
 ]
-
-const nextSubtopicEventListener = () => {
-  const subtopicNextButton = document.getElementById("subtopic-next-button")
-  subtopicNextButton.addEventListener("click", () => {
-    // change subtopicTextColor
-    changeSubtopicTextColor()
-  })
-}
 
 const changeSubtopicTextColor = () => {
   console.log(selection)
@@ -93,12 +86,6 @@ const populateSubtopicContent = (selection) => {
       subtopicMaterialDiv.classList.add("subtopic-material-text-animate")
     }
   })
-  showNextBtn()
-}
-
-const showNextBtn = () => {
-  const subtopicNextButton = document.getElementById("subtopic-next-button")
-  subtopicNextButton.classList.add("subtopic-next-button-show")
 }
 
 const selectionsEventListener = () => {
@@ -122,20 +109,14 @@ const checkSelection = (selectedItemId, selectedItem) => {
     resetMenuItemMargin()
     resetMenuBars()
     resetSelectionDescription()
-    // resetSubtopicLiMargin(selectedItem);
     showIntroSection()
     hideContentSection()
-    // resetshowToTopButton();
-    // hideMaterialsDiv();
-    // showTopicContent();
-    // window.scrollTo(0, 0);
   } else {
     console.log("else")
     Store.removeSelections()
     Store.addSelections(selectedItemId)
     hideContentSection()
     resetSelectionDiv()
-    resetSubTopicMaterialDiv()
     resetSubtopicTextColor()
     resetMenuItemMargin()
     resetMenuBars()
@@ -148,23 +129,6 @@ const checkSelection = (selectedItemId, selectedItem) => {
     showContentSection()
     loadSubTopics(selectedItem)
   }
-}
-
-const resetSubTopicMaterialDiv = () => {
-  const subtopicsUl = document.getElementById("subtopics-ul")
-  subtopicsUl.classList.remove("subtopic-ul-hide")
-  resetMaterialText()
-  resetNextButton()
-}
-
-const resetMaterialText = () => {
-  const subtopicMaterialText = document.getElementById("subtopic-material-text")
-  subtopicMaterialText.innerText = ""
-}
-
-const resetNextButton = () => {
-  const subtopicNextButton = document.getElementById("subtopic-next-button")
-  subtopicNextButton.classList.remove("subtopic-next-button-show")
 }
 
 const resetSubtopicTextColor = () => {
