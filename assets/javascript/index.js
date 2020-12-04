@@ -1,15 +1,12 @@
 window.addEventListener("load", (event) => {
   selectionsEventListener()
-  // fadeIn();
-  // loadPageAtTop();
-  // Bsubtopics-ulttonEventListener();
   Store.removeSelections()
   Skills.removeSubtopicArray()
-  subTopicEventListener()
+  nextBtnEventListener()
 })
 
 // Content Material
-const tower_material = [
+const CONNECTED_OR_CART = [
   {
     name: "Maneuvers monitor",
     competencies: [
@@ -44,90 +41,55 @@ const tower_material = [
   },
 ]
 
-const changeSubtopicTextColor = () => {
-  console.log(selection)
-  if (selection.classList.value === "subtopic1-text") {
-    console.log(selection)
-    selection.classList.add("subtopic1-text-color")
-  } else {
-    selection.classList.add("subtopic2-text-color")
-  }
-}
-
-const subTopicEventListener = () => {
-  const subTopicDivs = document.getElementsByClassName("subtopic-div")
-  for (let item of subTopicDivs) {
-    item.firstChild.addEventListener("click", () => {
-      const selection = item.firstChild.dataset.subtopic
-      Skills.addSubtopic(selection)
-      hideSubtopicsUl()
-      // changeSubtopicTextColor(item.firstChild)
-      populateSubtopicContent(selection)
+const nextBtnEventListener = () => {
+  const nextBtn = document.getElementsByClassName("next-btn")
+  for (let item of nextBtn) {
+    item.addEventListener("click", () => {
+      console.log(Store.getSelections(), CONNECTED_OR_CART)
+      // Hide content description
+      hideContentDescription()
     })
   }
 }
 
-// const changeSubtopicTextColor = (selection) => {
-
-// }
-
-const hideSubtopicsUl = () => {
-  const subtopicsUl = document.getElementById("subtopics-ul")
-  subtopicsUl.classList.add("subtopic-ul-hide")
-}
-
-const populateSubtopicContent = (selection) => {
-  tower_material.map((item) => {
-    if (item.name === selection) {
-      const subtopicMaterialDiv = document.getElementById(
-        "subtopic-material-text"
-      )
-      subtopicMaterialDiv.innerText = item.description
-      subtopicMaterialDiv.classList.add("subtopic-material-text-animate")
-    }
-  })
+const hideContentDescription = () => {
+  const contentDescription = document.getElementById("content-description")
+  contentDescription.classList.add("content-description-hide")
 }
 
 const selectionsEventListener = () => {
   const selectionDiv = document.getElementsByClassName("selection-description")
   for (let item of selectionDiv) {
     item.addEventListener("click", () => {
-      let selectedItem = item.parentElement.parentElement
-      let selectedItemId = item.parentElement.parentElement.children
-        .item(0)
-        .children.item(1).dataset.topic
-      checkSelection(selectedItemId, selectedItem)
+      let selectedItem = item.dataset.topic
+      let selectedElement = item
+      // let selectedItemId = item.parentElement.parentElement.children
+      //   .item(0)
+      //   .children.item(1).dataset.topic
+      checkSelection(selectedItem, selectedElement)
     })
   }
 }
 
-const checkSelection = (selectedItemId, selectedItem) => {
-  if (Store.getSelections()[0] === selectedItemId) {
-    console.log("if")
+const checkSelection = (selectedItem, selectedElement) => {
+  if (Store.getSelections()[0] === selectedItem) {
     Store.removeSelections()
     resetSelectionDiv()
     resetMenuItemMargin()
     resetMenuBars()
-    resetSelectionDescription()
     showIntroSection()
     hideContentSection()
   } else {
-    console.log("else")
     Store.removeSelections()
-    Store.addSelections(selectedItemId)
+    Store.addSelections(selectedItem)
     hideContentSection()
     resetSelectionDiv()
     resetSubtopicTextColor()
     resetMenuItemMargin()
     resetMenuBars()
-    resetSelectionDescription()
-    // showToTopButton();
-    changeborderLeft(selectedItem)
-    // changeSubtopicLiMargin(selectedItem);
-    changeDescriptionColor(selectedItem)
+    changeborderLeft(selectedElement)
     hideIntroSection()
     showContentSection()
-    loadSubTopics(selectedItem)
   }
 }
 
@@ -136,25 +98,6 @@ const resetSubtopicTextColor = () => {
   for (item of subtopic1Text) {
     item.classList.remove("subtopic1-text-color")
   }
-  // if (selection.dataset.subtopic === "topic 1") {
-  //   selection.classList.add("subtopic1-text-color")
-  // } else {
-  //   selection.classList.add("subtopic2-text-color")
-  // }
-}
-
-const loadSubTopics = (selectedItem) => {
-  const subTopicsArray = []
-  let subTopics
-  if (selectedItem.id === "topic-one") {
-    subTopics = document.getElementsByClassName("subtopic1-text")
-  } else {
-    subTopics = document.getElementsByClassName("subtopic2-text")
-  }
-  for (item of subTopics) {
-    subTopicsArray.push(item.dataset.subtopic)
-  }
-  Skills.addSubtopicArray(subTopicsArray)
 }
 
 const hideContentSection = () => {
@@ -178,15 +121,6 @@ const hideIntroSection = () => {
 const showIntroSection = () => {
   const introductionSection = document.getElementById("introduction")
   introductionSection.classList.remove("introduction-hide")
-}
-
-const resetSelectionDescription = () => {
-  const selectionDescription = document.getElementsByClassName(
-    "selection-description"
-  )
-  for (let item of selectionDescription) {
-    item.classList.remove("selection-description-selected")
-  }
 }
 
 const resetMenuBars = () => {
@@ -213,28 +147,19 @@ const resetSelectionDiv = () => {
   }
 }
 
-const changeDescriptionColor = (selectedItem) => {
-  const selectionDescription = selectedItem.children.item(0).children.item(1)
-  selectionDescription.classList.add("selection-description-selected")
+const changeborderLeft = (selectedElement) => {
+  let selectedParentDiv = selectedElement.parentElement.parentElement
+  menuItemMargin(selectedParentDiv)
+  menuBar(selectedParentDiv)
+  selectedParentDiv.classList.add("selection-div-selected")
 }
 
-const changeborderLeft = (selectedItem) => {
-  let menuItem = selectedItem.children.item(0)
-  menuItemMargin(menuItem)
-  menuBar(menuItem)
-  selectedItem.classList.add("selection-div-selected")
+const menuItemMargin = (selectedParentDiv) => {
+  selectedParentDiv.children.item(0).classList.add("menu-icon-selected")
 }
 
-const menuItemMargin = (menuItem) => {
-  menuItem.children.item(0).classList.add("menu-icon-selected")
-}
-
-// const changeBackground = (selectedItem) => {
-//   selectedItem.classList.add("selected-div-selected");
-// };
-
-const menuBar = (menuItem) => {
-  const menuBars = menuItem.children.item(0).children
+const menuBar = (selectedParentDiv) => {
+  const menuBars = selectedParentDiv.children.item(0).children.item(0).children
   for (let item of menuBars) {
     item.classList.add("menu-bar-selected")
   }
@@ -255,7 +180,6 @@ class Store {
 
   // Add Selections
   static addSelections(selection) {
-    console.log(selection)
     const selections = Store.getSelections()
     selections.push(selection)
     localStorage.setItem("selections", JSON.stringify(selections))
@@ -308,7 +232,6 @@ class Skills {
     const subtopics = Skills.getSubTopics()
     subtopics.push(selectedItem)
     localStorage.setItem("subTopicSelections", JSON.stringify(subtopics))
-    console.log(subtopics)
   }
 
   static removeSubtopic() {
