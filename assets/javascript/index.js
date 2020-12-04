@@ -3,6 +3,7 @@ window.addEventListener("load", (event) => {
   Store.removeSelections()
   Skills.removeSubtopicArray()
   nextBtnEventListener()
+  competenciesBtnImgEventListener()
 })
 
 // Content Material
@@ -39,7 +40,33 @@ const CONNECTED_OR_CART = [
       },
     ],
   },
+  {
+    name: "Secondary Monitor",
+    competencies: [
+      {
+        "competency 1":
+          "Locates wireless transmitter and connection token key ",
+      },
+      {
+        "competency 2": "Confirms secondary monitor is on wireless RGB setting",
+      },
+      {
+        "competency 3":
+          "Connects token key from transmitter to monitor slot to sync secondary monitor  ",
+      },
+      {
+        "competency 4": "Can switch signals if needed to the secondary monitor",
+      },
+    ],
+  },
 ]
+
+const competenciesBtnImgEventListener = () => {
+  const btnImg = document.getElementsByClassName("btn-img")
+  for (let item of btnImg) {
+    item.addEventListener("click", () => console.log(item.dataset.completed))
+  }
+}
 
 const nextBtnEventListener = () => {
   const nextBtn = document.getElementsByClassName("next-btn")
@@ -63,15 +90,24 @@ const selectionsEventListener = () => {
     item.addEventListener("click", () => {
       let selectedItem = item.dataset.topic
       let selectedElement = item
-      // let selectedItemId = item.parentElement.parentElement.children
-      //   .item(0)
-      //   .children.item(1).dataset.topic
+      loadSelectionMaterial(selectedItem)
       checkSelection(selectedItem, selectedElement)
     })
   }
 }
 
+const loadSelectionMaterial = (selectedItem) => {
+  let material
+  if (selectedItem === "Connected OR Cart") {
+    material = CONNECTED_OR_CART
+  }
+  material.map((item) => {
+    console.log(item)
+  })
+}
+
 const checkSelection = (selectedItem, selectedElement) => {
+  console.log(Store.getSelections()[0], selectedItem)
   if (Store.getSelections()[0] === selectedItem) {
     Store.removeSelections()
     resetSelectionDiv()
