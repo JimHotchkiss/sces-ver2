@@ -115,6 +115,7 @@ const checkSelection = (selectedItem, selectedElement) => {
     resetMenuBars()
     showIntroSection()
     hideContentSection()
+    hideMaterialsDiv()
   } else {
     Store.removeSelections()
     Store.addSelections(selectedItem)
@@ -127,6 +128,11 @@ const checkSelection = (selectedItem, selectedElement) => {
     hideIntroSection()
     showContentSection()
   }
+}
+
+const hideMaterialsDiv = () => {
+  const materialsDiv = document.getElementById("materials-div")
+  materialsDiv.classList.remove("materials-div-show")
 }
 
 const resetSubtopicTextColor = () => {
@@ -147,6 +153,12 @@ const showContentSection = () => {
   const selection = Store.getSelections()[0]
   const contentSection = document.getElementById(selection)
   contentSection.classList.add("content-section-show")
+  showMaterialsDiv()
+}
+
+const showMaterialsDiv = () => {
+  const materialsDiv = document.getElementById("materials-div")
+  materialsDiv.classList.add("materials-div-show")
 }
 
 const hideIntroSection = () => {

@@ -211,6 +211,15 @@
 }
 
 .materials-div {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 603px;
+    transition: 0.9s;
+}
+
+.materials-div.materials-div-show {
     display: flex;
     align-items: center;
     justify-content: center;
