@@ -7,55 +7,24 @@ window.addEventListener("load", (event) => {
 })
 
 // Content Material
-const CONNECTED_OR_CART = [
+const MATERIAL = [
   {
-    name: "Maneuvers monitor",
-    competencies: [
+    topic: "Connected OR Cart",
+    subtopics: [
       {
-        "competency 1": "Turns black knob to unlock mounting arm",
+        name: "Maneuvers monitor",
+        description: "descriptive text",
+        url: "https://youtu.be/g5DKY_4tHBU",
       },
       {
-        "competency 2": "Uses flat panel bracket to move monitor",
+        name: "Power on tower",
+        description: "descriptive text",
+        url: "https://youtu.be/rcQ3TL-YMho",
       },
       {
-        "competency 3":
-          "Locks black knob to lock monitor when moving tower to different location",
-      },
-      {
-        "competency 4": "States troubleshooting if monitor is blank",
-      },
-    ],
-  },
-  {
-    name: "Turns on Tower",
-    competencies: [
-      {
-        "competency 1": "Plugs in",
-      },
-      {
-        "competency 2": "Flips main switch on front of tower",
-      },
-      {
-        "competency 3": "Presses green power button on SDC3- has flip screen",
-      },
-    ],
-  },
-  {
-    name: "Secondary Monitor",
-    competencies: [
-      {
-        "competency 1":
-          "Locates wireless transmitter and connection token key ",
-      },
-      {
-        "competency 2": "Confirms secondary monitor is on wireless RGB setting",
-      },
-      {
-        "competency 3":
-          "Connects token key from transmitter to monitor slot to sync secondary monitor  ",
-      },
-      {
-        "competency 4": "Can switch signals if needed to the secondary monitor",
+        name: "Cart transport",
+        description: "descriptive text",
+        url: "https://youtu.be/PV1whxY8PZ4",
       },
     ],
   },
@@ -97,12 +66,30 @@ const selectionsEventListener = () => {
 }
 
 const loadSelectionMaterial = (selectedItem) => {
-  let material
-  if (selectedItem === "Connected OR Cart") {
-    material = CONNECTED_OR_CART
-  }
-  material.map((item) => {
-    console.log(item)
+  const contentListDiv = document.getElementById("content-list-div")
+  const contentListDynamicTitle = document.getElementById(
+    "content-list-dynamic-title"
+  )
+
+  contentListDynamicTitle.innerText = selectedItem
+  console.log(selectedItem)
+  MATERIAL.map((item) => {
+    if (item.topic === selectedItem) {
+      item.subtopics.map((subtopic) => {
+        const subtopicRowDiv = document.createElement("div")
+        subtopicRowDiv.setAttribute("class", "subtopic-row-div")
+        if (subtopic.url !== "") {
+          const subtopicVideoIcon = document.createElement("div")
+          subtopicVideoIcon.setAttribute("class", "subtopic-video-icon")
+          subtopicRowDiv.appendChild(subtopicVideoIcon)
+        }
+        const subtopicText = document.createElement("p")
+        subtopicText.setAttribute("class", "subtopic-text")
+        subtopicText.innerText = subtopic.name
+        subtopicRowDiv.appendChild(subtopicText)
+        contentListDiv.appendChild(subtopicRowDiv)
+      })
+    }
   })
 }
 
@@ -159,6 +146,11 @@ const showContentSection = () => {
 const showMaterialsDiv = () => {
   const materialsDiv = document.getElementById("materials-div")
   materialsDiv.classList.add("materials-div-show")
+  populateMaterialsDiv()
+}
+
+const populateMaterialsDiv = () => {
+  console.log(Store.getSelections())
 }
 
 const hideIntroSection = () => {
