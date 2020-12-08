@@ -14,21 +14,57 @@ const MATERIAL = [
       {
         name: "Maneuvers monitor",
         description: "descriptive text",
-        url: "https://youtu.be/g5DKY_4tHBU",
+        videoUrl: "https://youtu.be/g5DKY_4tHBU",
+        pdfUrl: "../img/pdf.png",
       },
       {
         name: "Power on tower",
         description: "descriptive text",
-        url: "https://youtu.be/rcQ3TL-YMho",
+        videoUrl: "https://youtu.be/rcQ3TL-YMho",
+        pdfUrl: "../img/pdf.png",
       },
       {
         name: "Cart transport",
         description: "descriptive text",
-        url: "https://youtu.be/PV1whxY8PZ4",
+        videoUrl: "https://youtu.be/PV1whxY8PZ4",
+        pdfUrl: "../img/pdf.png",
       },
     ],
   },
 ]
+
+const subTopicVideoIconEventListener = () => {
+  const subtopicVideoIcon = document.getElementsByClassName(
+    "subtopic-video-icon"
+  )
+  for (let item of subtopicVideoIcon) {
+    item.addEventListener("click", () => {
+      const selectedItem = item.dataset.subtopic
+      showSubtopicVideo(selectedItem)
+    })
+  }
+}
+
+const showSubtopicVideo = (selectedItem) => {
+  MATERIAL.map((item) => {
+    item.subtopics.map((subtopic) => {
+      if (subtopic.name === selectedItem) {
+        const url = subtopic.videoUrl
+        resetContentHtml()
+        loadSubtopicVideo(url)
+      }
+    })
+  })
+}
+
+const loadSubtopicVideo = (url) => {
+  const contentDiv = document.getElementById("content-list-div")
+  const videoTag = document.createElement("video")
+
+  videoTag.src = url
+  videoTag.autoplay = true
+  contentDiv.appendChild(videoTag)
+}
 
 const competenciesBtnImgEventListener = () => {
   const btnImg = document.getElementsByClassName("btn-img")
@@ -67,30 +103,43 @@ const selectionsEventListener = () => {
 
 const loadSelectionMaterial = (selectedItem) => {
   const contentListDiv = document.getElementById("content-list-div")
-  const contentListDynamicTitle = document.getElementById(
-    "content-list-dynamic-title"
-  )
 
-  contentListDynamicTitle.innerText = selectedItem
-  console.log(selectedItem)
+  // create title
+  const contentListDynamicTitle = document.createElement("div")
+  contentListDynamicTitle.setAttribute("class", "content-list-dynamic-title")
+  contentListDynamicTitle.innerText = selectedItem + " " + "Learning Resources"
+  contentListDiv.appendChild(contentListDynamicTitle)
+
   MATERIAL.map((item) => {
     if (item.topic === selectedItem) {
       item.subtopics.map((subtopic) => {
+        console.log(subtopic.name)
         const subtopicRowDiv = document.createElement("div")
         subtopicRowDiv.setAttribute("class", "subtopic-row-div")
-        if (subtopic.url !== "") {
+        if (subtopic.videoUrl !== "") {
           const subtopicVideoIcon = document.createElement("div")
           subtopicVideoIcon.setAttribute("class", "subtopic-video-icon")
+          subtopicVideoIcon.setAttribute("data-subtopic", subtopic.name)
           subtopicRowDiv.appendChild(subtopicVideoIcon)
+        }
+        if (subtopic.pdfUrl !== "") {
+          const subtopicPdfIcon = document.createElement("div")
+          subtopicPdfIcon.setAttribute("class", "subtopic-pdf-icon")
+          subtopicRowDiv.appendChild(subtopicPdfIcon)
         }
         const subtopicText = document.createElement("p")
         subtopicText.setAttribute("class", "subtopic-text")
+        const subtopicCompleteIcon = document.createElement("div")
+        subtopicCompleteIcon.setAttribute("class", "subtopic-complete-icon")
+
         subtopicText.innerText = subtopic.name
         subtopicRowDiv.appendChild(subtopicText)
+        subtopicRowDiv.appendChild(subtopicCompleteIcon)
         contentListDiv.appendChild(subtopicRowDiv)
       })
     }
   })
+  subTopicVideoIconEventListener()
 }
 
 const checkSelection = (selectedItem, selectedElement) => {
@@ -98,6 +147,7 @@ const checkSelection = (selectedItem, selectedElement) => {
   if (Store.getSelections()[0] === selectedItem) {
     Store.removeSelections()
     resetSelectionDiv()
+    resetContentHtml()
     resetMenuItemMargin()
     resetMenuBars()
     showIntroSection()
@@ -115,6 +165,11 @@ const checkSelection = (selectedItem, selectedElement) => {
     hideIntroSection()
     showContentSection()
   }
+}
+
+const resetContentHtml = () => {
+  const contentListDiv = document.getElementById("content-list-div")
+  contentListDiv.innerText = ""
 }
 
 const hideMaterialsDiv = () => {
