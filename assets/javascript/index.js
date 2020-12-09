@@ -1,7 +1,6 @@
 window.addEventListener("load", (event) => {
   selectionsEventListener()
   Store.removeSelections()
-  Skills.removeSubtopicArray()
   Skills.removeSubtopic()
 })
 
@@ -23,6 +22,12 @@ const MATERIAL = [
       },
       {
         name: "Cart transport",
+        description: "descriptive text",
+        videoUrl: "https://www.youtube.com/embed/PV1whxY8PZ4",
+        pdfUrl: "../img/pdf.png",
+      },
+      {
+        name: "Secondary monitor",
         description: "descriptive text",
         videoUrl: "https://www.youtube.com/embed/PV1whxY8PZ4",
         pdfUrl: "../img/pdf.png",
@@ -89,6 +94,38 @@ const hideSubtopicVideo = () => {
   contentDiv.innerText = ""
   const selection = Store.getSelections()[0]
   loadSelectionMaterial(selection)
+  checkCompleteMaterial()
+  updateProgressBar()
+}
+
+const updateProgressBar = () => {
+  const subtopicLength = Skills.getSubTopics().length
+  const materialLength = MATERIAL[0].subtopics.length
+  const percentage = Math.floor((subtopicLength / materialLength) * 100)
+  const contentSectionProgressBar = document.getElementsByClassName(
+    "content-section-progress-bar"
+  )
+  for (let item of contentSectionProgressBar) {
+    item.style.width = `${percentage}%`
+  }
+}
+
+const checkCompleteMaterial = () => {
+  if (Skills.getSubTopics().length === MATERIAL[0].subtopics.length) {
+    const selectionImage = document.getElementById(
+      `${Store.getSelections()[0]}-img`
+    )
+    selectionImage.classList.add("selection-progress-img-show")
+    showSectionTest()
+  }
+}
+
+const showSectionTest = () => {
+  const contentListDiv = document.getElementById("content-list-div")
+  const testBtn = document.createElement("div")
+  testBtn.setAttribute("class", "test-btn")
+  testBtn.innerText = "Test yourself"
+  contentListDiv.appendChild(testBtn)
 }
 
 const hideContentDescription = () => {
@@ -136,24 +173,8 @@ const loadSelectionMaterial = (selectedItem) => {
         const subtopicText = document.createElement("p")
         subtopicText.setAttribute("class", "subtopic-text")
         const subtopicCompleteIcon = document.createElement("div")
-        if (Skills.getSubTopics().length === 0) {
-          subtopicCompleteIcon.setAttribute("class", "subtopic-complete-icon")
-        } else {
-          Skills.getSubTopics().map((topic) => {
-            if (topic === subtopic.name) {
-              subtopicCompleteIcon.setAttribute(
-                "class",
-                "subtopic-complete-icon-complete"
-              )
-            } else {
-              subtopicCompleteIcon.setAttribute(
-                "class",
-                "subtopic-complete-icon"
-              )
-            }
-          })
-        }
-
+        subtopicCompleteIcon.setAttribute("class", "subtopic-complete-icon")
+        subtopicCompleteIcon.setAttribute("data-topic", subtopic.name)
         subtopicText.innerText = subtopic.name
         subtopicRowDiv.appendChild(subtopicText)
         subtopicRowDiv.appendChild(subtopicCompleteIcon)
@@ -161,7 +182,25 @@ const loadSelectionMaterial = (selectedItem) => {
       })
     }
   })
+  subtopicAmendIcon()
   subTopicVideoIconEventListener()
+}
+
+const subtopicAmendIcon = () => {
+  const subtopicIconDiv = document.getElementsByClassName(
+    "subtopic-complete-icon"
+  )
+  Skills.getSubTopics().map((topic) => {
+    for (let item of subtopicIconDiv) {
+      if (topic === item.dataset.topic) {
+        console.log(item.className)
+
+        item.className = "subtopic-complete-icon-complete"
+      } else {
+        console.log(topic === item.dataset.topic)
+      }
+    }
+  })
 }
 
 const checkSelection = (selectedItem, selectedElement) => {
@@ -174,6 +213,7 @@ const checkSelection = (selectedItem, selectedElement) => {
     showIntroSection()
     hideContentSection()
     hideMaterialsDiv()
+    checkCompleteMaterial()
   } else {
     Store.removeSelections()
     Store.addSelections(selectedItem)
@@ -185,6 +225,7 @@ const checkSelection = (selectedItem, selectedElement) => {
     changeborderLeft(selectedElement)
     hideIntroSection()
     showContentSection()
+    checkCompleteMaterial()
   }
 }
 
@@ -342,21 +383,18 @@ class Skills {
   static addSubtopic(selectedItem) {
     const subtopics = Skills.getSubTopics()
     if (subtopics.length === 0) {
-      console.log("zero")
       subtopics.push(selectedItem)
       localStorage.setItem("subTopicSelections", JSON.stringify(subtopics))
     }
 
-    subtopics.map((topic) => {
-      if (topic === selectedItem) {
-        console.log(subtopics)
-        return subtopics
-      } else {
-        console.log(topic, selectedItem, "else")
-        subtopics.push(selectedItem)
-        localStorage.setItem("subTopicSelections", JSON.stringify(subtopics))
-      }
-    })
+    if (
+      subtopics[0] !== selectedItem &&
+      subtopics[1] !== selectedItem &&
+      subtopics[2] !== selectedItem
+    ) {
+      subtopics.push(selectedItem)
+      localStorage.setItem("subTopicSelections", JSON.stringify(subtopics))
+    }
   }
 
   static removeSubtopic() {
