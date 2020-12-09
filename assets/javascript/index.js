@@ -2,8 +2,7 @@ window.addEventListener("load", (event) => {
   selectionsEventListener()
   Store.removeSelections()
   Skills.removeSubtopicArray()
-  nextBtnEventListener()
-  competenciesBtnImgEventListener()
+  Skills.removeSubtopic()
 })
 
 // Content Material
@@ -14,19 +13,18 @@ const MATERIAL = [
       {
         name: "Maneuvers monitor",
         description: "descriptive text",
-        videoUrl: "https://youtu.be/g5DKY_4tHBU",
-        pdfUrl: "../img/pdf.png",
+        videoUrl: "https://www.youtube.com/embed/g5DKY_4tHBU",
       },
       {
         name: "Power on tower",
         description: "descriptive text",
-        videoUrl: "https://youtu.be/rcQ3TL-YMho",
+        videoUrl: "https://www.youtube.com/embed/rcQ3TL-YMho",
         pdfUrl: "../img/pdf.png",
       },
       {
         name: "Cart transport",
         description: "descriptive text",
-        videoUrl: "https://youtu.be/PV1whxY8PZ4",
+        videoUrl: "https://www.youtube.com/embed/PV1whxY8PZ4",
         pdfUrl: "../img/pdf.png",
       },
     ],
@@ -51,37 +49,46 @@ const showSubtopicVideo = (selectedItem) => {
       if (subtopic.name === selectedItem) {
         const url = subtopic.videoUrl
         resetContentHtml()
-        loadSubtopicVideo(url)
+        loadSubtopicVideo(url, subtopic)
       }
     })
   })
 }
 
-const loadSubtopicVideo = (url) => {
+const loadSubtopicVideo = (url, subtopic) => {
   const contentDiv = document.getElementById("content-list-div")
-  const videoTag = document.createElement("video")
-
-  videoTag.src = url
-  videoTag.autoplay = true
-  contentDiv.appendChild(videoTag)
+  const contentTitle = document.createElement("div")
+  contentTitle.setAttribute("class", "video-title")
+  const completeBtn = document.createElement("div")
+  completeBtn.setAttribute("class", "complete-btn")
+  completeBtn.setAttribute("id", "complete-btn")
+  completeBtn.setAttribute("data-topic", subtopic.name)
+  completeBtn.innerText = "Complete"
+  contentTitle.innerText = subtopic.name
+  const iFrame = document.createElement("iframe")
+  iFrame.src = url
+  iFrame.width = "560"
+  iFrame.height = "315"
+  contentDiv.appendChild(contentTitle)
+  contentDiv.appendChild(iFrame)
+  contentDiv.appendChild(completeBtn)
+  completeBtnEventListener()
 }
 
-const competenciesBtnImgEventListener = () => {
-  const btnImg = document.getElementsByClassName("btn-img")
-  for (let item of btnImg) {
-    item.addEventListener("click", () => console.log(item.dataset.completed))
-  }
+const completeBtnEventListener = () => {
+  const completeBtn = document.getElementById("complete-btn")
+  completeBtn.addEventListener("click", () => {
+    const subtopic = completeBtn.dataset.topic
+    Skills.addSubtopic(subtopic)
+    hideSubtopicVideo(subtopic)
+  })
 }
 
-const nextBtnEventListener = () => {
-  const nextBtn = document.getElementsByClassName("next-btn")
-  for (let item of nextBtn) {
-    item.addEventListener("click", () => {
-      console.log(Store.getSelections(), CONNECTED_OR_CART)
-      // Hide content description
-      hideContentDescription()
-    })
-  }
+const hideSubtopicVideo = () => {
+  const contentDiv = document.getElementById("content-list-div")
+  contentDiv.innerText = ""
+  const selection = Store.getSelections()[0]
+  loadSelectionMaterial(selection)
 }
 
 const hideContentDescription = () => {
@@ -113,7 +120,6 @@ const loadSelectionMaterial = (selectedItem) => {
   MATERIAL.map((item) => {
     if (item.topic === selectedItem) {
       item.subtopics.map((subtopic) => {
-        console.log(subtopic.name)
         const subtopicRowDiv = document.createElement("div")
         subtopicRowDiv.setAttribute("class", "subtopic-row-div")
         if (subtopic.videoUrl !== "") {
@@ -130,7 +136,23 @@ const loadSelectionMaterial = (selectedItem) => {
         const subtopicText = document.createElement("p")
         subtopicText.setAttribute("class", "subtopic-text")
         const subtopicCompleteIcon = document.createElement("div")
-        subtopicCompleteIcon.setAttribute("class", "subtopic-complete-icon")
+        if (Skills.getSubTopics().length === 0) {
+          subtopicCompleteIcon.setAttribute("class", "subtopic-complete-icon")
+        } else {
+          Skills.getSubTopics().map((topic) => {
+            if (topic === subtopic.name) {
+              subtopicCompleteIcon.setAttribute(
+                "class",
+                "subtopic-complete-icon-complete"
+              )
+            } else {
+              subtopicCompleteIcon.setAttribute(
+                "class",
+                "subtopic-complete-icon"
+              )
+            }
+          })
+        }
 
         subtopicText.innerText = subtopic.name
         subtopicRowDiv.appendChild(subtopicText)
@@ -143,7 +165,6 @@ const loadSelectionMaterial = (selectedItem) => {
 }
 
 const checkSelection = (selectedItem, selectedElement) => {
-  console.log(Store.getSelections()[0], selectedItem)
   if (Store.getSelections()[0] === selectedItem) {
     Store.removeSelections()
     resetSelectionDiv()
@@ -201,11 +222,6 @@ const showContentSection = () => {
 const showMaterialsDiv = () => {
   const materialsDiv = document.getElementById("materials-div")
   materialsDiv.classList.add("materials-div-show")
-  populateMaterialsDiv()
-}
-
-const populateMaterialsDiv = () => {
-  console.log(Store.getSelections())
 }
 
 const hideIntroSection = () => {
@@ -305,10 +321,10 @@ class Skills {
 
   static getSubTopics() {
     let subTopics
-    if (localStorage.getItem("subTopics") === null) {
+    if (localStorage.getItem("subTopicSelections") === null) {
       subTopics = []
     } else {
-      subTopics = JSON.parse(localStorage.getItem("subTopics"))
+      subTopics = JSON.parse(localStorage.getItem("subTopicSelections"))
     }
     return subTopics
   }
@@ -325,14 +341,31 @@ class Skills {
 
   static addSubtopic(selectedItem) {
     const subtopics = Skills.getSubTopics()
-    subtopics.push(selectedItem)
-    localStorage.setItem("subTopicSelections", JSON.stringify(subtopics))
+    if (subtopics.length === 0) {
+      console.log("zero")
+      subtopics.push(selectedItem)
+      localStorage.setItem("subTopicSelections", JSON.stringify(subtopics))
+    }
+
+    subtopics.map((topic) => {
+      if (topic === selectedItem) {
+        console.log(subtopics)
+        return subtopics
+      } else {
+        console.log(topic, selectedItem, "else")
+        subtopics.push(selectedItem)
+        localStorage.setItem("subTopicSelections", JSON.stringify(subtopics))
+      }
+    })
   }
 
   static removeSubtopic() {
     const subtopicSelections = Skills.getSubTopics()
     subtopicSelections.length = 0
-    localStorage.setItem("subtopic")
+    localStorage.setItem(
+      "subTopicSelections",
+      JSON.stringify(subtopicSelections)
+    )
   }
 
   static removeSubtopicArray() {
