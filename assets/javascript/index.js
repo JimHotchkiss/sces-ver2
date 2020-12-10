@@ -1,8 +1,8 @@
 window.addEventListener("load", (event) => {
   selectionsEventListener()
-  // Store.removeSelections()
-  // Skills.removeSubtopic()
-  // Skills.removeSubtopicArray()
+  Store.removeSelections()
+  Skills.removeSubtopic()
+  Skills.removeSubtopicArray()
 })
 
 // Content Material
@@ -179,7 +179,6 @@ const testBtnEventListener = () => {
     // reset progress bar
     resetProgressBar()
     // reset content-section-text
-    resetContentSectionText()
     // loadTestingMaterial()
     loadTestingMaterial()
   })
@@ -195,11 +194,6 @@ const loadTestingMaterial = () => {
     // descriptionDiv.innerText = eachItem.description
     // contentDiv.appendChild(descriptionDiv)
   })
-}
-
-const resetContentSectionText = () => {
-  const contentSectionText = document.getElementById("content-section-span")
-  contentSectionText.innerText = "Testing"
 }
 
 const resetProgressBar = () => {
@@ -232,9 +226,20 @@ const loadSelectionMaterial = (selectedItem) => {
   const contentListDiv = document.getElementById("content-list-div")
 
   // create title
-  const contentListDynamicTitle = document.createElement("div")
-  contentListDynamicTitle.setAttribute("class", "content-list-dynamic-title")
-  contentListDynamicTitle.innerText = selectedItem + " " + "Learning Resources"
+  let contentListDynamicTitle = document.getElementById(
+    "content-list-dynamic-title"
+  )
+  if (contentListDynamicTitle === null) {
+    console.log("null")
+    contentListDynamicTitle = document.createElement("div")
+    contentListDynamicTitle.setAttribute("id", "content-list-dynamic-title")
+    contentListDynamicTitle.innerText = "Learning Resources"
+  } else {
+    console.log(contentListDynamicTitle.innerText, "here")
+    contentListDynamicTitle.innerText = ""
+    contentListDynamicTitle.innerText = "Learning Resources"
+  }
+
   contentListDiv.appendChild(contentListDynamicTitle)
 
   MATERIAL.map((item) => {
@@ -304,6 +309,7 @@ const subtopicAmendIcon = () => {
 
 const checkSelection = (selectedItem, selectedElement) => {
   if (Store.getSelections()[0] === selectedItem) {
+    console.log(Store.getSelections()[0] === selectedItem, "here")
     Store.removeSelections()
     resetSelectionDiv()
     resetContentHtml()
@@ -313,19 +319,42 @@ const checkSelection = (selectedItem, selectedElement) => {
     hideContentSection()
     hideMaterialsDiv()
     checkCompleteMaterial()
+  } else if (
+    Store.getSelections().length !== 0 &&
+    Store.getSelections()[0] !== selectedItem
+  ) {
+    console.log("else if")
+    Store.removeSelections()
+    Store.addSelections(selectedItem)
+    // reset skills menu
+    resetBorderLeft()
+    resetMenuBars()
+    changeborderLeft(selectedElement)
   } else {
     Store.removeSelections()
     Store.addSelections(selectedItem)
     hideContentSection()
-    resetSelectionDiv()
-    resetSubtopicTextColor()
-    resetMenuItemMargin()
-    resetMenuBars()
     changeborderLeft(selectedElement)
     hideIntroSection()
     showContentSection()
+    showContentSectionTitle()
     checkCompleteMaterial()
   }
+}
+
+const resetBorderLeft = () => {
+  const selectionDivs = document.getElementsByClassName("selection-div")
+  for (let item of selectionDivs) {
+    item.classList.remove("selection-div-selected")
+  }
+}
+
+const showContentSectionTitle = () => {
+  const contentSectionTitle = document.getElementById("content-section-title")
+  const hTag = contentSectionTitle.children.item(0)
+  const pTage = contentSectionTitle.children.item(1)
+  hTag.innerText = Store.getSelections()[0]
+  pTage.innerText = "Ad auctor condimentum dis est et facilisis"
 }
 
 const resetContentHtml = () => {
@@ -346,6 +375,7 @@ const resetSubtopicTextColor = () => {
 }
 
 const hideContentSection = () => {
+  console.log(Store.getSelections())
   const contentSectionDivs = document.getElementsByClassName("content-section")
   for (let item of contentSectionDivs) {
     item.classList.remove("content-section-show")
@@ -353,8 +383,7 @@ const hideContentSection = () => {
 }
 
 const showContentSection = () => {
-  const selection = Store.getSelections()[0]
-  const contentSection = document.getElementById(selection)
+  const contentSection = document.getElementById("content-section")
   contentSection.classList.add("content-section-show")
   showMaterialsDiv()
 }
