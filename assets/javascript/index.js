@@ -70,7 +70,38 @@ const MATERIAL = [
       },
     ],
   },
+  // sterile processing
+  {
+    topic: "Sterile Processing",
+    subtopics: [
+      {
+        name: "Reprocessing 1688",
+        description: "descriptive text",
+        videoUrl: "",
+        pdfUrl: "../img/pdf.png",
+        compentencies: [
+          { description: "Turns black knob to unlock mounting arm" },
+          { description: "Uses flat panel bracket to move monitor" },
+          {
+            description:
+              "Locks black knob to lock monitor when moving tower to different location",
+          },
+          { description: "States troubleshooting if monitor is blank" },
+        ],
+      },
+    ],
+  },
 ]
+
+const subtopicPdfIconEventListener = () => {
+  const subtopicPdfIcon = document.getElementsByClassName("subtopic-pdf-icon")
+  for (let item of subtopicPdfIcon) {
+    item.addEventListener("click", () => {
+      const selectedItem = item.dataset.subtopic
+      // showSubtopicVideo(selectedItem)
+    })
+  }
+}
 
 const subTopicVideoIconEventListener = () => {
   const subtopicVideoIcon = document.getElementsByClassName(
@@ -135,15 +166,27 @@ const hideSubtopicVideo = () => {
 }
 
 const updateResourceProgressBar = () => {
-  const subtopicLength = Skills.getSubTopics().length
-  const materialLength = MATERIAL[0].subtopics.length
-  const percentage = Math.floor((subtopicLength / materialLength) * 100)
-  const contentSectionProgressBar = document.getElementsByClassName(
-    "content-section-progress-bar"
-  )
-  for (let item of contentSectionProgressBar) {
-    item.style.width = `${percentage}%`
-  }
+  let percentage
+  MATERIAL.map((item, i) => {
+    if (item.topic === Store.getSelections()[0]) {
+      console.log(item.topic, Store.getSelections()[0])
+      const subtopicLength = Skills.getSubTopics().length
+      const materialLength = MATERIAL[i].subtopics.length
+      console.log(Skills.getSubTopics(), materialLength)
+      if (subtopicLength === 1 && materialLength == 1) {
+        console.log(subtopicLength === 1 && materialLength == 1)
+        percentage = 0
+      } else {
+        percentage = Math.floor((subtopicLength / materialLength) * 100)
+        const contentSectionProgressBar = document.getElementsByClassName(
+          "content-section-progress-bar"
+        )
+        for (let item of contentSectionProgressBar) {
+          item.style.width = `${percentage}%`
+        }
+      }
+    }
+  })
 }
 
 const checkCompleteMaterial = () => {
@@ -152,7 +195,7 @@ const checkCompleteMaterial = () => {
       `${Store.getSelections()[0]}-img`
     )
     if (selectionImage !== null) {
-      selectionImage.classList.add("selection-progress-img-show")
+      // selectionImage.classList.add("selection-progress-img-show")
       showTestBtn()
     }
   }
@@ -185,14 +228,12 @@ const testBtnEventListener = () => {
 }
 
 const loadTestingMaterial = () => {
-  console.log(Skills.getSubtopicsArray()[0].compentencies)
   const contentDiv = document.getElementById("content-list-div")
   Skills.getSubtopicsArray()[0].compentencies.map((eachItem, index) => {
-    console.log(eachItem, index)
-    // const descriptionDiv = document.createElement("div")
-    // descriptionDiv.setAttribute("class", "description-div")
-    // descriptionDiv.innerText = eachItem.description
-    // contentDiv.appendChild(descriptionDiv)
+    const descriptionDiv = document.createElement("div")
+    descriptionDiv.setAttribute("class", "description-div")
+    descriptionDiv.innerText = eachItem.description
+    contentDiv.appendChild(descriptionDiv)
   })
 }
 
@@ -230,17 +271,22 @@ const loadSelectionMaterial = (selectedItem) => {
     "content-list-dynamic-title"
   )
   if (contentListDynamicTitle === null) {
-    console.log("null")
     contentListDynamicTitle = document.createElement("div")
     contentListDynamicTitle.setAttribute("id", "content-list-dynamic-title")
     contentListDynamicTitle.innerText = "Learning Resources"
   } else {
-    console.log(contentListDynamicTitle.innerText, "here")
     contentListDynamicTitle.innerText = ""
     contentListDynamicTitle.innerText = "Learning Resources"
   }
 
   contentListDiv.appendChild(contentListDynamicTitle)
+  if (selectedItem !== "Connected OR Cart") {
+    const imageDiv = document.getElementById("image-div")
+    imageDiv.classList.add("image-div-hide")
+  } else {
+    const imageDiv = document.getElementById("image-div")
+    imageDiv.classList.remove("image-div-hide")
+  }
 
   MATERIAL.map((item) => {
     if (item.topic === selectedItem) {
@@ -256,6 +302,7 @@ const loadSelectionMaterial = (selectedItem) => {
         if (subtopic.pdfUrl !== "") {
           const subtopicPdfIcon = document.createElement("div")
           subtopicPdfIcon.setAttribute("class", "subtopic-pdf-icon")
+          subtopicPdfIcon.setAttribute("data-subtopic", subtopic.name)
           subtopicRowDiv.appendChild(subtopicPdfIcon)
         }
         const subtopicText = document.createElement("p")
@@ -291,6 +338,7 @@ const loadSelectionMaterial = (selectedItem) => {
   })
   subtopicAmendIcon()
   subTopicVideoIconEventListener()
+  subtopicPdfIconEventListener()
 }
 
 const subtopicAmendIcon = () => {
@@ -309,7 +357,6 @@ const subtopicAmendIcon = () => {
 
 const checkSelection = (selectedItem, selectedElement) => {
   if (Store.getSelections()[0] === selectedItem) {
-    console.log(Store.getSelections()[0] === selectedItem, "here")
     Store.removeSelections()
     resetSelectionDiv()
     resetContentHtml()
@@ -323,13 +370,20 @@ const checkSelection = (selectedItem, selectedElement) => {
     Store.getSelections().length !== 0 &&
     Store.getSelections()[0] !== selectedItem
   ) {
-    console.log("else if")
+    // Skills.removeSubtopic()
     Store.removeSelections()
     Store.addSelections(selectedItem)
+    // reset content html
+    resetContentHtml()
     // reset skills menu
     resetBorderLeft()
     resetMenuBars()
     changeborderLeft(selectedElement)
+    loadSelectionMaterial(selectedItem)
+    showContentSection()
+    showContentSectionTitle()
+    resetProgressBar()
+    updateResourceProgressBar()
   } else {
     Store.removeSelections()
     Store.addSelections(selectedItem)
@@ -375,7 +429,6 @@ const resetSubtopicTextColor = () => {
 }
 
 const hideContentSection = () => {
-  console.log(Store.getSelections())
   const contentSectionDivs = document.getElementsByClassName("content-section")
   for (let item of contentSectionDivs) {
     item.classList.remove("content-section-show")
