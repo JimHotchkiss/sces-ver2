@@ -1,7 +1,8 @@
 window.addEventListener("load", (event) => {
   selectionsEventListener()
-  Store.removeSelections()
-  Skills.removeSubtopic()
+  // Store.removeSelections()
+  // Skills.removeSubtopic()
+  // Skills.removeSubtopicArray()
 })
 
 // Content Material
@@ -13,12 +14,29 @@ const MATERIAL = [
         name: "Maneuvers monitor",
         description: "descriptive text",
         videoUrl: "https://www.youtube.com/embed/g5DKY_4tHBU",
+        pdfUrl: "../img/pdf.png",
+        compentencies: [
+          { description: "Turns black knob to unlock mounting arm" },
+          { description: "Uses flat panel bracket to move monitor" },
+          {
+            description:
+              "Locks black knob to lock monitor when moving tower to different location",
+          },
+          { description: "States troubleshooting if monitor is blank" },
+        ],
       },
       {
         name: "Power on tower",
         description: "descriptive text",
         videoUrl: "https://www.youtube.com/embed/rcQ3TL-YMho",
         pdfUrl: "../img/pdf.png",
+        compentencies: [
+          { description: "Plugs in " },
+          { description: "Flips main switch on front of tower" },
+          {
+            description: "Presses green power button on SDC3- has flip screen",
+          },
+        ],
       },
       {
         name: "Cart transport",
@@ -31,6 +49,24 @@ const MATERIAL = [
         description: "descriptive text",
         videoUrl: "https://www.youtube.com/embed/PV1whxY8PZ4",
         pdfUrl: "../img/pdf.png",
+        compentencies: [
+          {
+            description:
+              "Locates wireless transmitter and connection token key",
+          },
+          {
+            description:
+              "Confirms secondary monitor is on wireless RGB setting",
+          },
+          {
+            description:
+              "Connects token key from transmitter to monitor slot to sync secondary monitor",
+          },
+          {
+            description:
+              "Can switch signals if needed to the secondary monitor",
+          },
+        ],
       },
     ],
   },
@@ -95,10 +131,10 @@ const hideSubtopicVideo = () => {
   const selection = Store.getSelections()[0]
   loadSelectionMaterial(selection)
   checkCompleteMaterial()
-  updateProgressBar()
+  updateResourceProgressBar()
 }
 
-const updateProgressBar = () => {
+const updateResourceProgressBar = () => {
   const subtopicLength = Skills.getSubTopics().length
   const materialLength = MATERIAL[0].subtopics.length
   const percentage = Math.floor((subtopicLength / materialLength) * 100)
@@ -115,17 +151,64 @@ const checkCompleteMaterial = () => {
     const selectionImage = document.getElementById(
       `${Store.getSelections()[0]}-img`
     )
-    selectionImage.classList.add("selection-progress-img-show")
-    showSectionTest()
+    if (selectionImage !== null) {
+      selectionImage.classList.add("selection-progress-img-show")
+      showTestBtn()
+    }
   }
 }
 
-const showSectionTest = () => {
+const showTestBtn = () => {
   const contentListDiv = document.getElementById("content-list-div")
   const testBtn = document.createElement("div")
   testBtn.setAttribute("class", "test-btn")
+  testBtn.setAttribute("id", "test-btn")
   testBtn.innerText = "Test yourself"
   contentListDiv.appendChild(testBtn)
+  testBtnEventListener()
+}
+
+const testBtnEventListener = () => {
+  const testBtn = document.getElementById("test-btn")
+  testBtn.addEventListener("click", () => {
+    // reset content text html
+    resetContentHtml()
+    // Load compentencies into local storage -> SubtopicArray
+    const compentencies = MATERIAL[0].subtopics
+    Skills.addSubtopicArray(compentencies)
+    // reset progress bar
+    resetProgressBar()
+    // reset content-section-text
+    resetContentSectionText()
+    // loadTestingMaterial()
+    loadTestingMaterial()
+  })
+}
+
+const loadTestingMaterial = () => {
+  console.log(Skills.getSubtopicsArray()[0].compentencies)
+  const contentDiv = document.getElementById("content-list-div")
+  Skills.getSubtopicsArray()[0].compentencies.map((eachItem, index) => {
+    console.log(eachItem, index)
+    // const descriptionDiv = document.createElement("div")
+    // descriptionDiv.setAttribute("class", "description-div")
+    // descriptionDiv.innerText = eachItem.description
+    // contentDiv.appendChild(descriptionDiv)
+  })
+}
+
+const resetContentSectionText = () => {
+  const contentSectionText = document.getElementById("content-section-span")
+  contentSectionText.innerText = "Testing"
+}
+
+const resetProgressBar = () => {
+  const contentSectionProgressBar = document.getElementsByClassName(
+    "content-section-progress-bar"
+  )
+  for (let item of contentSectionProgressBar) {
+    item.style.width = `0%`
+  }
 }
 
 const hideContentDescription = () => {
@@ -175,9 +258,28 @@ const loadSelectionMaterial = (selectedItem) => {
         const subtopicCompleteIcon = document.createElement("div")
         subtopicCompleteIcon.setAttribute("class", "subtopic-complete-icon")
         subtopicCompleteIcon.setAttribute("data-topic", subtopic.name)
+
+        // subtopic complete ring
+        const subtopicCompleteRingOuter = document.createElement("div")
+        subtopicCompleteRingOuter.setAttribute(
+          "class",
+          "subtopic-complete-ring-outer"
+        )
+        const subtopicCompleteRingInner = document.createElement("div")
+        subtopicCompleteRingInner.setAttribute(
+          "class",
+          "subtopic-complete-ring-inner"
+        )
+
+        subtopicCompleteRingOuter.appendChild(subtopicCompleteRingInner)
+
+        // end subtopic complete ring
+
         subtopicText.innerText = subtopic.name
         subtopicRowDiv.appendChild(subtopicText)
         subtopicRowDiv.appendChild(subtopicCompleteIcon)
+        // insert subtopic complete ring
+        subtopicRowDiv.appendChild(subtopicCompleteRingOuter)
         contentListDiv.appendChild(subtopicRowDiv)
       })
     }
@@ -193,11 +295,8 @@ const subtopicAmendIcon = () => {
   Skills.getSubTopics().map((topic) => {
     for (let item of subtopicIconDiv) {
       if (topic === item.dataset.topic) {
-        console.log(item.className)
-
         item.className = "subtopic-complete-icon-complete"
       } else {
-        console.log(topic === item.dataset.topic)
       }
     }
   })
@@ -297,6 +396,7 @@ const resetSelectionDiv = () => {
   for (let item of selectionDiv) {
     item.parentElement.parentElement.classList.remove("selection-div-selected")
   }
+  updateResourceProgressBar()
 }
 
 const changeborderLeft = (selectedElement) => {
@@ -348,6 +448,7 @@ class Store {
 // Skills Class - Handles users skills progress
 class Skills {
   // a function that grabs all the subtopics?
+
   static getSubtopicsArray() {
     let subTopicSelectionsArray
     if (localStorage.getItem("subTopicSelectionsArray") === null) {
