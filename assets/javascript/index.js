@@ -509,6 +509,7 @@ class Store {
     } else {
       selections = JSON.parse(localStorage.getItem("selections"))
     }
+    console.log(selections)
     return selections
   }
 
